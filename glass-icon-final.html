@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Wine Glass Icon - Vinora</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #F5F1EB;
+            --color-bg-card: #FFFFFF;
+            --color-primary: #722F37;
+            --color-text: #1A1A2E;
+            --color-text-secondary: #6B5D52;
+            --color-border: #E8E4DD;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .option {
+            background: var(--color-bg-card);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .option-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .option-desc {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .size-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .size-label {
+            width: 60px;
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        .glasses {
+            display: flex;
+            gap: 4px;
+        }
+
+        .glass {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Revised design: Inverted trapezoid, taller */
+        .rev-lg { width: 18px; height: 40px; }
+        .rev-md { width: 14px; height: 30px; }
+        .rev-sm { width: 11px; height: 24px; }
+        .rev-xs { width: 9px; height: 18px; }
+
+        /* U-shape design */
+        .u-lg { width: 16px; height: 32px; }
+        .u-md { width: 12px; height: 24px; }
+        .u-sm { width: 10px; height: 20px; }
+        .u-xs { width: 8px; height: 16px; }
+
+        .rating-demo {
+            background: var(--color-bg);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, #722F37 0%, #4A1F24 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 16px;
+        }
+
+        .recommendation h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .recommendation p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .code-block {
+            background: #1A1A2E;
+            color: #E8E4DD;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍷 Final Wine Glass Icons</h1>
+        <p class="subtitle">Two refined designs based on your feedback</p>
+
+        <div class="comparison">
+            <!-- WITH BULGE: Wide rim, subtle outward bulge, tapers to stem -->
+            <div class="option">
+                <div class="option-name">With Subtle Bulge</div>
+                <p class="option-desc">Wide rim with gentle outward curve in middle third, then tapers to stem. Matches your reference's "belly" silhouette.</p>
+
+                <div class="size-row">
+                    <span class="size-label">Large</span>
+                    <div class="glasses">
+                        <svg class="glass rev-lg" viewBox="0 0 20 44">
+                            <!-- Bowl: wide rim (x=3 to 17), subtle bulge at y=10-12, narrows to stem (x=10 at y=18) -->
+                            <path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <!-- Liquid fill with same bulge -->
+                            <path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/>
+                        </svg>
+                        <svg class="glass rev-lg" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-lg" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-lg" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-lg" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="size-row">
+                    <span class="size-label">Medium</span>
+                    <div class="glasses">
+                        <svg class="glass rev-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="size-row">
+                    <span class="size-label">Small</span>
+                    <div class="glasses">
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="rating-demo">
+                    <div class="rating-row">
+                        <span style="font-weight: 600;">4.3</span>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 5 10, 6 12 C7 14, 9 16, 10 16 C11 16, 13 14, 14 12 C15 10, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass rev-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 19 10, 18 12 C17 14, 12 17, 10 18 C8 17, 3 14, 2 12 C1 10, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                        <span style="color: var(--color-text-secondary);">/5</span>
+                        <span style="color: var(--color-text-tertiary); font-size: 12px;">(847)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMPLER SMOOTH TAPER -->
+            <div class="option">
+                <div class="option-name">Smooth Taper</div>
+                <p class="option-desc">Cleaner silhouette - wide rim with smooth curve to narrow stem. Less pronounced bulge, more elegant.</p>
+
+                <div class="size-row">
+                    <span class="size-label">Large</span>
+                    <div class="glasses">
+                        <svg class="glass u-lg" viewBox="0 0 20 44">
+                            <!-- Simpler smooth curve: wide rim to narrow stem -->
+                            <path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/>
+                        </svg>
+                        <svg class="glass u-lg" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-lg" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-lg" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-lg" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="size-row">
+                    <span class="size-label">Medium</span>
+                    <div class="glasses">
+                        <svg class="glass u-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-md" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="size-row">
+                    <span class="size-label">Small</span>
+                    <div class="glasses">
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </div>
+                </div>
+
+                <div class="rating-demo">
+                    <div class="rating-row">
+                        <span style="font-weight: 600;">4.3</span>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4 C4 4, 6 12, 7 14 C8 16, 9 16, 10 16 C11 16, 12 16, 13 14 C14 12, 16 4, 16 4 Z" fill="currentColor"/></svg>
+                        <svg class="glass u-sm" viewBox="0 0 20 44"><path d="M3 2 L17 2 C17 2, 15 12, 13 15 C11 17, 10 18, 10 18 C10 18, 9 17, 7 15 C5 12, 3 2, 3 2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 18 L10 36" stroke="currentColor" stroke-width="2.5"/><path d="M4 40 L16 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                        <span style="color: var(--color-text-secondary);">/5</span>
+                        <span style="color: var(--color-text-tertiary); font-size: 12px;">(847)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="recommendation">
+            <h2>✅ Classic Wine Glass Shape</h2>
+            <p><strong>Classic (left)</strong>: Curved bowl with wider rim. Matches your reference image - the most recognizable wine glass silhouette.</p>
+            <p style="margin-top: 8px;"><strong>Streamlined (right)</strong>: Same silhouette but with straight trapezoid lines. Cleaner at small sizes.</p>
+            <p style="margin-top: 12px; font-size: 13px; opacity: 0.8;">Both have the wide rim that tapers toward the stem - classic wine glass proportions.</p>
+        </div>
+
+        <div class="code-block">
+<strong>SVG Code for Classic Wine Glass (curved, recommended):</strong>
+
+&lt;svg viewBox="0 0 20 44"&gt;
+  &lt;path d="M2 2 L18 2 C18 2, 14 16, 10 18 C6 16, 2 2, 2 2" fill="none" stroke="currentColor" stroke-width="1.5"/&gt;
+  &lt;path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/&gt;
+  &lt;path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/&gt;
+  &lt;path d="M4 4 C4 4, 7 14, 10 16 C13 14, 16 4, 16 4 Z" fill="currentColor"/&gt;
+&lt;/svg&gt;
+
+<strong>Streamlined version (straight trapezoid lines):</strong>
+
+&lt;svg viewBox="0 0 20 44"&gt;
+  &lt;path d="M2 2 L18 2 L13 18 L7 18 Z" fill="none" stroke="currentColor" stroke-width="1.5"/&gt;
+  &lt;path d="M10 18 L10 36" stroke="currentColor" stroke-width="1.5"/&gt;
+  &lt;path d="M4 40 L16 40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/&gt;
+  &lt;path d="M4 4 L16 4 L12 14 L8 14 Z" fill="currentColor"/&gt;
+&lt;/svg&gt;
+
+<strong>Use with currentColor for fill/stroke to respect CSS variables.</strong>
+        </div>
+    </div>
+</body>
+</html>

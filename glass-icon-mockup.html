@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass Icon Mockup - Vinora</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #F5F1EB;
+            --color-bg-card: #FFFFFF;
+            --color-primary: #722F37;
+            --color-text: #1A1A2E;
+            --color-text-secondary: #6B5D52;
+            --color-text-tertiary: #8B7B6B;
+            --color-border: #E8E4DD;
+            --glass-empty: #E8E4DD;
+            --glass-fill: #722F37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.5;
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 40px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            margin-bottom: 40px;
+        }
+
+        section {
+            background: var(--color-bg-card);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--color-text);
+        }
+
+        h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ─── Glass Icon Base ─── */
+        .glass-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .glass-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ─── Glass States ─── */
+        .glass-full {
+            color: var(--glass-fill);
+        }
+
+        .glass-half {
+            color: var(--glass-fill);
+        }
+
+        .glass-empty {
+            color: var(--glass-empty);
+        }
+
+        /* ─── Glass Sizes ─── */
+        .glass-xs { width: 12px; height: 16px; }
+        .glass-sm { width: 16px; height: 20px; }
+        .glass-md { width: 20px; height: 26px; }
+        .glass-lg { width: 24px; height: 32px; }
+        .glass-xl { width: 32px; height: 42px; }
+        .glass-2xl { width: 48px; height: 64px; }
+
+        /* ─── Rating Display ─── */
+        .rating-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rating-display.tight {
+            gap: 2px;
+        }
+
+        .rating-display.spacious {
+            gap: 8px;
+        }
+
+        .rating-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--color-text);
+        }
+
+        .rating-divider {
+            color: var(--color-text-tertiary);
+            margin: 0 4px;
+        }
+
+        .rating-count {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+        }
+
+        /* ─── Showcase Grid ─── */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .showcase-item {
+            text-align: center;
+            padding: 24px;
+            background: var(--color-bg);
+            border-radius: 12px;
+        }
+
+        .showcase-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        .showcase-value {
+            font-size: 11px;
+            color: var(--color-text-tertiary);
+            font-family: monospace;
+        }
+
+        /* ─── Comparison Row ─── */
+        .comparison-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-label {
+            flex: 1;
+        }
+
+        .comparison-stars,
+        .comparison-glasses {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .comparison-glasses {
+            min-width: 140px;
+            justify-content: flex-end;
+        }
+
+        /* ─── Card Mockup ─── */
+        .card-mockup {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .card-image {
+            width: 80px;
+            height: 120px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #722F37 0%, #4A1F24 100%);
+            flex-shrink: 0;
+        }
+
+        .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-name {
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .card-meta {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        /* ─── PRO Badge ─── */
+        .pro-badge {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ─── Review Card ─── */
+        .review-card {
+            background: var(--color-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .reviewer-info {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+        }
+
+        .review-date {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        .review-rating {
+            margin-bottom: 8px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ─── Filter Chips ─── */
+        .filter-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-chip:hover {
+            border-color: var(--color-primary);
+        }
+
+        .filter-chip.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .chip-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chip-rating .glass-icon {
+            width: 12px;
+            height: 16px;
+        }
+
+        /* ─── Gauge Display ─── */
+        .gauge-display {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .gauge-circle {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .gauge-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .gauge-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .gauge-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        .gauge-count {
+            font-size: 13px;
+            color: var(--color-text-tertiary);
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG Symbols for reuse -->
+    <svg style="display: none;">
+        <defs>
+            <!-- Geometric modern wine glass - bowl, thin stem, flat base -->
+            <symbol id="glass-full" viewBox="0 0 22 34">
+                <!-- Bowl: trapezoid shape (wider top, narrower bottom) -->
+                <path d="M2 2 L20 2 L17 16 L5 16 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <!-- Stem: thin vertical line -->
+                <path d="M11 16 L11 29" stroke="currentColor" stroke-width="1.5"/>
+                <!-- Base: horizontal line -->
+                <path d="M6 31 L16 31" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <!-- Wine: fills entire bowl -->
+                <path d="M3 4 L19 4 L16.5 14 L5.5 14 Z" fill="currentColor"/>
+            </symbol>
+
+            <symbol id="glass-half" viewBox="0 0 22 34">
+                <!-- Bowl outline -->
+                <path d="M2 2 L20 2 L17 16 L5 16 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <!-- Stem -->
+                <path d="M11 16 L11 29" stroke="currentColor" stroke-width="1.5"/>
+                <!-- Base -->
+                <path d="M6 31 L16 31" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <!-- Wine: fills bottom half of bowl -->
+                <path d="M6 8 L16 8 L15.5 13 L6.5 13 Z" fill="currentColor"/>
+                <!-- Half divider line -->
+                <path d="M4 8 L18 8" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            </symbol>
+
+            <symbol id="glass-empty" viewBox="0 0 22 34">
+                <!-- Bowl outline only -->
+                <path d="M2 2 L20 2 L17 16 L5 16 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <!-- Stem -->
+                <path d="M11 16 L11 29" stroke="currentColor" stroke-width="1.5"/>
+                <!-- Base -->
+                <path d="M6 31 L16 31" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <div class="container">
+        <h1>🍷 Glass Icon System</h1>
+        <p class="subtitle">ADR 0001 — Glass-based rating system replacement for stars</p>
+
+        <!-- Icon Variations -->
+        <section>
+            <h2>1. Glass Icon States</h2>
+            <p style="color: var(--color-text-secondary); margin-bottom: 24px;">
+                Three states: Full, Half, and Empty. Fill level represents rating value.
+            </p>
+
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <div class="glass-icon glass-2xl glass-full">
+                        <svg><use href="#glass-full"/></svg>
+                    </div>
+                    <div class="showcase-label">Full Glass</div>
+                    <div class="showcase-value">glass-full</div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="glass-icon glass-2xl glass-half">
+                        <svg><use href="#glass-half"/></svg>
+                    </div>
+                    <div class="showcase-label">Half Glass</div>
+                    <div class="showcase-value">glass-half</div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="glass-icon glass-2xl glass-empty">
+                        <svg><use href="#glass-empty"/></svg>
+                    </div>
+                    <div class="showcase-label">Empty Glass</div>
+                    <div class="showcase-value">glass-empty</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Size System -->
+        <section>
+            <h2>2. Size System</h2>
+            <p style="color: var(--color-text-secondary); margin-bottom: 24px;">
+                Consistent scale from list views (xs/sm) to detail pages (lg/xl).
+            </p>
+
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <div class="glass-icon glass-xs glass-full">
+                        <svg><use href="#glass-full"/></svg>
+                    </div>
+                    <div class="showcase-label">Extra Small</div>
+                    <div class="showcase-value">12px × 16px</div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="glass-icon glass-sm glass-full">
+                        <svg><use href="#glass-full"/></svg>
+                    </div>
+                    <div class="showcase-label">Small</div>
+                    <div class="showcase-value">16px × 20px</div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="glass-icon glass-md glass-full">
+                        <svg><use href="#glass-full"/></svg>
+                    </div>
+                    <div class="showcase-label">Medium</div>
+                    <div class="showcase-value">20px × 26px</div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="glass-icon glass-lg glass-full">
+                        <svg><use href="#glass-full"/></svg>
+                    </div>
+                    <div class="showcase-label">Large</div>
+                    <div class="showcase-value">24px × 32px</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rating Displays -->
+        <section>
+            <h2>3. Rating Displays</h2>
+            <h3>Format: Number + Glasses + Count</h3>
+
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div class="comparison-row">
+                    <span class="comparison-label">5.0 — Perfect score</span>
+                    <div class="comparison-glasses">
+                        <span class="rating-number">5.0</span>
+                        <div class="rating-display tight" style="--glass-fill: #722F37;">
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                        </div>
+                        <span class="rating-divider">/</span>
+                        <span>5</span>
+                        <span class="rating-count">(2.3k)</span>
+                    </div>
+                </div>
+
+                <div class="comparison-row">
+                    <span class="comparison-label">4.3 — Excellent</span>
+                    <div class="comparison-glasses">
+                        <span class="rating-number">4.3</span>
+                        <div class="rating-display tight" style="--glass-fill: #722F37;">
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-empty"><svg><use href="#glass-empty"/></svg></span>
+                        </div>
+                        <span class="rating-divider">/</span>
+                        <span>5</span>
+                        <span class="rating-count">(847)</span>
+                    </div>
+                </div>
+
+                <div class="comparison-row">
+                    <span class="comparison-label">3.5 — Average</span>
+                    <div class="comparison-glasses">
+                        <span class="rating-number">3.5</span>
+                        <div class="rating-display tight" style="--glass-fill: #722F37;">
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-half"><svg><use href="#glass-half"/></svg></span>
+                            <span class="glass-icon glass-sm glass-empty"><svg><use href="#glass-empty"/></svg></span>
+                        </div>
+                        <span class="rating-divider">/</span>
+                        <span>5</span>
+                        <span class="rating-count">(156)</span>
+                    </div>
+                </div>
+
+                <div class="comparison-row">
+                    <span class="comparison-label">2.0 — Poor</span>
+                    <div class="comparison-glasses">
+                        <span class="rating-number">2.0</span>
+                        <div class="rating-display tight" style="--glass-fill: #722F37;">
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-sm glass-empty"><svg><use href="#glass-empty"/></svg></span>
+                            <span class="glass-icon glass-sm glass-empty"><svg><use href="#glass-empty"/></svg></span>
+                            <span class="glass-icon glass-sm glass-empty"><svg><use href="#glass-empty"/></svg></span>
+                        </div>
+                        <span class="rating-divider">/</span>
+                        <span>5</span>
+                        <span class="rating-count">(23)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRO Rating -->
+        <section>
+            <h2>4. PRO Rating (Secondary)</h2>
+            <p style="color: var(--color-text-secondary); margin-bottom: 24px;">
+                PRO ratings appear smaller, secondary, with badge. Per ADR 0001: "PRO ratings appear alongside community ratings with a 'PRO' badge, always secondary."
+            </p>
+
+            <div class="gauge-display" style="padding: 24px; background: var(--color-bg); border-radius: 12px;">
+                <div class="gauge-circle">
+                    <svg viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#E8E4DD" stroke-width="8"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#722F37" stroke-width="8"
+                                stroke-dasharray="251.2" stroke-dashoffset="50" stroke-linecap="round"/>
+                    </svg>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                        <span class="gauge-number">4.3</span>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <div class="gauge-info">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="gauge-label">Comunidad</span>
+                            <span class="pro-badge">PRO</span>
+                        </div>
+                        <span class="gauge-count">847 valoraciones</span>
+                    </div>
+                    <div style="margin-top: 12px; padding: 12px; background: var(--color-bg-card); border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 14px; color: var(--color-text-secondary);">PRO</span>
+                            <div class="rating-display tight">
+                                <span class="glass-icon" style="width: 14px; height: 18px;"><svg><use href="#glass-full"/></svg></span>
+                                <span class="glass-icon" style="width: 14px; height: 18px;"><svg><use href="#glass-full"/></svg></span>
+                                <span class="glass-icon" style="width: 14px; height: 18px;"><svg><use href="#glass-full"/></svg></span>
+                                <span class="glass-icon" style="width: 14px; height: 18px;"><svg><use href="#glass-full"/></svg></span>
+                                <span class="glass-icon" style="width: 14px; height: 18px;"><svg><use href="#glass-half"/></svg></span>
+                            </div>
+                            <span style="font-size: 14px; color: var(--color-text); font-weight: 600;">4.5</span>
+                            <span style="font-size: 11px; color: var(--color-text-tertiary);">12 expertos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wine Card -->
+        <section>
+            <h2>5. Wine Card (List View)</h2>
+
+            <div class="card-mockup">
+                <div class="card-image"></div>
+                <div class="card-content">
+                    <div class="card-name">Ramón Bilbao Crianza</div>
+                    <div class="card-meta">Rioja DOCa · 2020 · Tempranillo</div>
+                    <div class="card-rating">
+                        <span class="rating-number" style="font-size: 16px;">4.3</span>
+                        <div class="rating-display tight">
+                            <span class="glass-icon glass-xs glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-xs glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-xs glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-xs glass-full"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon glass-xs glass-empty"><svg><use href="#glass-empty"/></svg></span>
+                        </div>
+                        <span style="font-size: 12px; color: var(--color-text-tertiary);">(847)</span>
+                    </div>
+                    <div style="margin-top: 8px; font-weight: 600; color: var(--color-primary);">desde €12.90</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Review Card -->
+        <section>
+            <h2>6. Review Card</h2>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">M</div>
+                    <div class="reviewer-info">
+                        <div class="reviewer-name">
+                            María García
+                            <span class="pro-badge">PRO</span>
+                        </div>
+                        <div class="review-date">Sommelier · hace 2 semanas</div>
+                    </div>
+                </div>
+                <div class="review-rating">
+                    <div class="rating-display tight">
+                        <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                        <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                        <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                        <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                        <span class="glass-icon glass-sm glass-full"><svg><use href="#glass-full"/></svg></span>
+                    </div>
+                </div>
+                <p class="review-text">Excelente relación calidad-precio. Notas de frutas negras bien integradas con el roble. Perfecto con carnes asadas.</p>
+            </div>
+        </section>
+
+        <!-- Filter Chips -->
+        <section>
+            <h2>7. Filter Chips</h2>
+
+            <div class="filter-chips">
+                <div class="filter-chip">Todos</div>
+                <div class="filter-chip active">
+                    <div class="chip-rating">
+                        <div class="rating-display tight">
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                        </div>
+                        <span>4+</span>
+                    </div>
+                </div>
+                <div class="filter-chip">
+                    <div class="chip-rating">
+                        <div class="rating-display tight">
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-full"/></svg></span>
+                            <span class="glass-icon" style="width: 12px; height: 16px;"><svg><use href="#glass-empty"/></svg></span>
+                        </div>
+                        <span>3+</span>
+                    </div>
+                </div>
+                <div class="filter-chip">Precio ↑</div>
+                <div class="filter-chip">Precio ↓</div>
+            </div>
+        </section>
+
+        <!-- Implementation Notes -->
+        <section style="border: 1px solid var(--color-primary); border-radius: 12px; background: #FAF3EC;">
+            <h2 style="color: var(--color-primary);">8. Implementation Notes</h2>
+            <ul style="color: var(--color-text-secondary); line-height: 1.8;">
+                <li><strong>SVG Path:</strong> Simple wine glass shape — bowl, stem, base. Can be swapped for more ornate design.</li>
+                <li><strong>Fill Logic:</strong> Full = 100% opacity, Half = gradient or diagonal split, Empty = 20% opacity for visibility.</li>
+                <li><strong>Colors:</strong> Primary (#722F37) for filled, border color (#E8E4DD) for empty. Supports dark mode via CSS variables.</li>
+                <li><strong>Accessibility:</strong> Add aria-label="4.3 de 5 copas" for screen readers. Consider title attribute on hover.</li>
+                <li><strong>Animation:</strong> Add fill animation on load — stroke-dashoffset transition from empty to filled state.</li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

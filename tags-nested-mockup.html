@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinora Tags - Nested Subtags Design</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: #F5F1EB;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: #1A1A2E;
+            margin-bottom: 8px;
+        }
+        .subtitle { font-size: 15px; color: #8B7B6B; margin-bottom: 24px; line-height: 1.6; }
+        .note { font-size: 13px; color: #8B7B6B; margin-bottom: 16px; line-height: 1.5; }
+        .section-title { font-size: 13px; font-weight: 600; color: #6B5D52; margin: 32px 0 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .tags-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+
+        /* Base tag styles */
+        .tag-duo {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid rgba(0,0,0,0.08);
+            min-width: 140px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        /* Icon side backgrounds - primary colors */
+        .tag-duo .bg-floral { background: #D4A5A0; }
+        .tag-duo .bg-verde { background: #4A7C59; }
+        .tag-duo .bg-citrico { background: #F5C942; }
+        .tag-duo .bg-hueso { background: #D4965A; }
+        .tag-duo .bg-tropical { background: #C9A961; }
+        .tag-duo .bg-roja { background: #C44238; }
+        .tag-duo .bg-negra { background: #5A1F24; }
+        .tag-duo .bg-herbaceo { background: #3D5A40; }
+        .tag-duo .bg-herbario { background: #4A7C59; }
+        .tag-duo .bg-especia { background: #C44238; }
+        .tag-duo .bg-levadura { background: #E8B86D; }
+        .tag-duo .bg-fml { background: #C9A961; }
+        .tag-duo .bg-roble { background: #8B7355; }
+        .tag-duo .bg-oxidativo { background: #6B5D4F; }
+        .tag-duo .bg-botella { background: #8B7355; }
+        .tag-duo .bg-defecto { background: #B8B3A8; }
+
+        /* Duotone filters */
+        .tag-duo .duo-floral { filter: url(#duotone-floral); }
+        .tag-duo .duo-verde { filter: url(#duotone-verde); }
+        .tag-duo .duo-citrico { filter: url(#duotone-citrico); }
+        .tag-duo .duo-hueso { filter: url(#duotone-hueso); }
+        .tag-duo .duo-tropical { filter: url(#duotone-tropical); }
+        .tag-duo .duo-roja { filter: url(#duotone-roja); }
+        .tag-duo .duo-negra { filter: url(#duotone-negra); }
+        .tag-duo .duo-herbaceo { filter: url(#duotone-herbaceo); }
+        .tag-duo .duo-herbario { filter: url(#duotone-herbario); }
+        .tag-duo .duo-especia { filter: url(#duotone-especia); }
+        .tag-duo .duo-levadura { filter: url(#duotone-levadura); }
+        .tag-duo .duo-fml { filter: url(#duotone-fml); }
+        .tag-duo .duo-roble { filter: url(#duotone-roble); }
+        .tag-duo .duo-oxidativo { filter: url(#duotone-oxidativo); }
+        .tag-duo .duo-botella { filter: url(#duotone-botella); }
+        .tag-duo .duo-defecto { filter: url(#duotone-defecto); }
+
+        .tag-duo .tag-emoji { font-size: 20px; }
+        .tag-duo .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+        .tag-duo .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+        }
+
+        /* Text side backgrounds - unique lighter versions of each primary color */
+        .tag-duo .tint-floral { background: #E8C9C5; }
+        .tag-duo .tint-verde { background: #7BA892; }
+        .tag-duo .tint-citrico { background: #F9DE8A; }
+        .tag-duo .tint-hueso { background: #E5B992; }
+        .tag-duo .tint-tropical { background: #E5D4A0; }
+        .tag-duo .tint-roja { background: #E08A80; }
+        .tag-duo .tint-negra { background: #A36D6F; }
+        .tag-duo .tint-herbaceo { background: #6B8D71; }
+        .tag-duo .tint-herbario { background: #8DB597; }
+        .tag-duo .tint-especia { background: #E49778; }
+        .tag-duo .tint-levadura { background: #F5D9A0; }
+        .tag-duo .tint-fml { background: #ECDAA8; }
+        .tag-duo .tint-roble { background: #B8A68C; }
+        .tag-duo .tint-oxidativo { background: #A89B87; }
+        .tag-duo .tint-botella { background: #C0B098; }
+        .tag-duo .tint-defecto { background: #D9D9C9; }
+
+        /* Label text - darker shade of PRIMARY color (20% darker) */
+        .tag-duo .label-floral { color: #A67A75; }
+        .tag-duo .label-verde { color: #2E4A38; }
+        .tag-duo .label-citrico { color: #A47916; }
+        .tag-duo .label-hueso { color: #86602F; }
+        .tag-duo .label-tropical { color: #826E34; }
+        .tag-duo .label-roja { color: #7E2816; }
+        .tag-duo .label-negra { color: #2E1113; }
+        .tag-duo .label-herbaceo { color: #243C27; }
+        .tag-duo .label-herbario { color: #2E4A38; }
+        .tag-duo .label-especia { color: #7E2816; }
+        .tag-duo .label-levadura { color: #846031; }
+        .tag-duo .label-fml { color: #826E34; }
+        .tag-duo .label-roble { color: #564532; }
+        .tag-duo .label-oxidativo { color: #3C372C; }
+        .tag-duo .label-botella { color: #564532; }
+        .tag-duo .label-defecto { color: #6E6E60; }
+
+        /* Detail text - even darker shade of PRIMARY color (40% darker) */
+        .tag-duo .detail-floral { color: #7A5855; }
+        .tag-duo .detail-verde { color: #1E3226; }
+        .tag-duo .detail-citrico { color: #7A5410; }
+        .tag-duo .detail-hueso { color: #624823; }
+        .tag-duo .detail-tropical { color: #625629; }
+        .tag-duo .detail-roja { color: #5E1D10; }
+        .tag-duo .detail-negra { color: #1E0B0C; }
+        .tag-duo .detail-herbaceo { color: #182C1A; }
+        .tag-duo .detail-herbario { color: #1E3226; }
+        .tag-duo .detail-especia { color: #5E1D10; }
+        .tag-duo .detail-levadura { color: #644824; }
+        .tag-duo .detail-fml { color: #625629; }
+        .tag-duo .detail-roble { color: #413A26; }
+        .tag-duo .detail-oxidativo { color: #2D2920; }
+        .tag-duo .detail-botella { color: #413A26; }
+        .tag-duo .detail-defecto { color: #525248; }
+
+        .tag-duo .tag-label { font-size: 14px; font-weight: 600; }
+        .tag-duo .tag-detail { font-size: 12px; font-weight: 400; }
+
+        .comparison {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .comparison-title { font-size: 12px; font-weight: 600; color: #6B5D52; margin-bottom: 12px; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    </style>
+</head>
+<body>
+    <!-- SVG Duotone Filters -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;">
+        <defs>
+            <filter id="duotone-floral"><feColorMatrix type="matrix" values="0.33 0 0 0 0.83  0.22 0 0 0 0.70  0.20 0 0 0 0.63  0 0 0 1 0"/></filter>
+            <filter id="duotone-verde"><feColorMatrix type="matrix" values="0.15 0 0 0 0.29  0.35 0 0 0 0.49  0.12 0 0 0 0.35  0 0 0 1 0"/></filter>
+            <filter id="duotone-citrico"><feColorMatrix type="matrix" values="0.30 0 0 0 0.96  0.25 0 0 0 0.72  0.08 0 0 0 0.26  0 0 0 1 0"/></filter>
+            <filter id="duotone-hueso"><feColorMatrix type="matrix" values="0.30 0 0 0 0.83  0.20 0 0 0 0.72  0.12 0 0 0 0.43  0 0 0 1 0"/></filter>
+            <filter id="duotone-tropical"><feColorMatrix type="matrix" values="0.28 0 0 0 0.79  0.22 0 0 0 0.66  0.10 0 0 0 0.38  0 0 0 1 0"/></filter>
+            <filter id="duotone-roja"><feColorMatrix type="matrix" values="0.35 0 0 0 0.77  0.15 0 0 0 0.26  0.12 0 0 0 0.22  0 0 0 1 0"/></filter>
+            <filter id="duotone-negra"><feColorMatrix type="matrix" values="0.28 0 0 0 0.35  0.10 0 0 0 0.12  0.08 0 0 0 0.14  0 0 0 1 0"/></filter>
+            <filter id="duotone-herbaceo"><feColorMatrix type="matrix" values="0.12 0 0 0 0.24  0.25 0 0 0 0.35  0.10 0 0 0 0.25  0 0 0 1 0"/></filter>
+            <filter id="duotone-herbario"><feColorMatrix type="matrix" values="0.15 0 0 0 0.29  0.35 0 0 0 0.49  0.12 0 0 0 0.35  0 0 0 1 0"/></filter>
+            <filter id="duotone-especia"><feColorMatrix type="matrix" values="0.35 0 0 0 0.77  0.15 0 0 0 0.26  0.12 0 0 0 0.22  0 0 0 1 0"/></filter>
+            <filter id="duotone-levadura"><feColorMatrix type="matrix" values="0.25 0 0 0 0.91  0.18 0 0 0 0.72  0.15 0 0 0 0.43  0 0 0 1 0"/></filter>
+            <filter id="duotone-fml"><feColorMatrix type="matrix" values="0.28 0 0 0 0.79  0.22 0 0 0 0.66  0.10 0 0 0 0.38  0 0 0 1 0"/></filter>
+            <filter id="duotone-roble"><feColorMatrix type="matrix" values="0.22 0 0 0 0.55  0.18 0 0 0 0.45  0.12 0 0 0 0.33  0 0 0 1 0"/></filter>
+            <filter id="duotone-oxidativo"><feColorMatrix type="matrix" values="0.20 0 0 0 0.42  0.18 0 0 0 0.36  0.15 0 0 0 0.31  0 0 0 1 0"/></filter>
+            <filter id="duotone-botella"><feColorMatrix type="matrix" values="0.22 0 0 0 0.55  0.18 0 0 0 0.45  0.12 0 0 0 0.33  0 0 0 1 0"/></filter>
+            <filter id="duotone-defecto"><feColorMatrix type="matrix" values="0.25 0 0 0 0.72  0.25 0 0 0 0.70  0.23 0 0 0 0.66  0 0 0 1 0"/></filter>
+        </defs>
+    </svg>
+
+    <h1>🏷️ Vinora Tags - Nested Subtags</h1>
+    <p class="subtitle">WSET flavor categories with specific descriptor breakdowns</p>
+
+    <div class="section-title">✅ NEW DESIGN - Nested Subtags</div>
+
+    <!-- Case 1: Single subtag -->
+    <p class="note">Single descriptor: shows count + name</p>
+    <div class="tags-row">
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-herbario"><span class="tag-emoji duo-herbario">🌱</span></div>
+            <div class="tag-text-side tint-herbario">
+                <span class="tag-label label-herbario">Herbario</span>
+                <span class="tag-detail detail-herbario">8 menta</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Case 2: Two subtags -->
+    <p class="note">Two descriptors: joined with "y"</p>
+    <div class="tags-row">
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-citrico"><span class="tag-emoji duo-citrico">🍋</span></div>
+            <div class="tag-text-side tint-citrico">
+                <span class="tag-label label-citrico">Fruta cítrica</span>
+                <span class="tag-detail detail-citrico">38 limón y 20 lima</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-botella"><span class="tag-emoji duo-botella">🍂</span></div>
+            <div class="tag-text-side tint-botella">
+                <span class="tag-label label-botella">Envejecimiento en botella</span>
+                <span class="tag-detail detail-botella">12 cuero y 8 miel</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Case 3: Three+ subtags -->
+    <p class="note">Three+ descriptors: shows top 2 + "y X más"</p>
+    <div class="tags-row">
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-negra"><span class="tag-emoji duo-negra">🫐</span></div>
+            <div class="tag-text-side tint-negra">
+                <span class="tag-label label-negra">Fruta negra</span>
+                <span class="tag-detail detail-negra">45 arándano, 32 zarzamora y 5 más</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-roble"><span class="tag-emoji duo-roble">🪵</span></div>
+            <div class="tag-text-side tint-roble">
+                <span class="tag-label label-roble">Roble</span>
+                <span class="tag-detail detail-roble">18 vainilla, 12 clavo y 6 más</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-roja"><span class="tag-emoji duo-roja">🍓</span></div>
+            <div class="tag-text-side tint-roja">
+                <span class="tag-label label-roja">Fruta roja</span>
+                <span class="tag-detail detail-roja">42 fresa, 28 frambuesa y 4 más</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">📊 All Categories Examples</div>
+
+    <div class="tags-row">
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-floral"><span class="tag-emoji duo-floral">🌸</span></div>
+            <div class="tag-text-side tint-floral">
+                <span class="tag-label label-floral">Floral</span>
+                <span class="tag-detail detail-floral">24 rosa y 18 violeta</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-verde"><span class="tag-emoji duo-verde">🍏</span></div>
+            <div class="tag-text-side tint-verde">
+                <span class="tag-label label-verde">Fruta verde</span>
+                <span class="tag-detail detail-verde">22 manzana y 15 pera</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-hueso"><span class="tag-emoji duo-hueso">🍑</span></div>
+            <div class="tag-text-side tint-hueso">
+                <span class="tag-label label-hueso">Fruta de hueso</span>
+                <span class="tag-detail detail-hueso">16 melocotón y 12 albaricoque</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-tropical"><span class="tag-emoji duo-tropical">🥭</span></div>
+            <div class="tag-text-side tint-tropical">
+                <span class="tag-label label-tropical">Fruta tropical</span>
+                <span class="tag-detail detail-tropical">18 mango y 14 piña</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-herbaceo"><span class="tag-emoji duo-herbaceo">🌿</span></div>
+            <div class="tag-text-side tint-herbaceo">
+                <span class="tag-label label-herbaceo">Herbáceo</span>
+                <span class="tag-detail detail-herbaceo">20 hierba y 14 pimiento verde</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-especia"><span class="tag-emoji duo-especia">🌶️</span></div>
+            <div class="tag-text-side tint-especia">
+                <span class="tag-label label-especia">Especias picantes</span>
+                <span class="tag-detail detail-especia">24 pimienta negra y 12 regaliz</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-levadura"><span class="tag-emoji duo-levadura">🍞</span></div>
+            <div class="tag-text-side tint-levadura">
+                <span class="tag-label label-levadura">Levaduras</span>
+                <span class="tag-detail detail-levadura">18 pan y 12 brioche</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-fml"><span class="tag-emoji duo-fml">🧈</span></div>
+            <div class="tag-text-side tint-fml">
+                <span class="tag-label label-fml">FML</span>
+                <span class="tag-detail detail-fml">16 mantequilla y 10 nata</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-oxidativo"><span class="tag-emoji duo-oxidativo">🥜</span></div>
+            <div class="tag-text-side tint-oxidativo">
+                <span class="tag-label label-oxidativo">Oxidación deliberada</span>
+                <span class="tag-detail detail-oxidativo">14 almendra y 10 avellana</span>
+            </div>
+        </div>
+        <div class="tag-duo">
+            <div class="tag-icon-side bg-defecto"><span class="tag-emoji duo-defecto">🏔️</span></div>
+            <div class="tag-text-side tint-defecto">
+                <span class="tag-label label-defecto">Mineral</span>
+                <span class="tag-detail detail-defecto">16 tiza y 12 pedernal</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">🎨 Color Palette Reference</div>
+    <table style="width: 100%; border-collapse: collapse; font-size: 12px; background: white; border-radius: 8px; overflow: hidden;">
+        <thead>
+            <tr style="background: #5A1F24; color: white;">
+                <th style="padding: 10px 8px;">Category</th>
+                <th style="padding: 10px 8px;">Primary</th>
+                <th style="padding: 10px 8px;">Secondary</th>
+                <th style="padding: 10px 8px;">Label (-20%)</th>
+                <th style="padding: 10px 8px;">Detail (-40%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #E8E4DD;"><td style="padding: 8px;">Floral</td><td class="hex-cell">#D4A5A0</td><td class="hex-cell">#E8C9C5</td><td class="hex-cell">#A67A75</td><td class="hex-cell">#7A5855</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD; background: #FAF8F5;"><td style="padding: 8px;">Fruta verde</td><td class="hex-cell">#4A7C59</td><td class="hex-cell">#7BA892</td><td class="hex-cell">#2E4A38</td><td class="hex-cell">#1E3226</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD;"><td style="padding: 8px;">Fruta cítrica</td><td class="hex-cell">#F5C942</td><td class="hex-cell">#F9DE8A</td><td class="hex-cell">#A47916</td><td class="hex-cell">#7A5410</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD; background: #FAF8F5;"><td style="padding: 8px;">Fruta de hueso</td><td class="hex-cell">#D4965A</td><td class="hex-cell">#E5B992</td><td class="hex-cell">#86602F</td><td class="hex-cell">#624823</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD;"><td style="padding: 8px;">Fruta tropical</td><td class="hex-cell">#C9A961</td><td class="hex-cell">#E5D4A0</td><td class="hex-cell">#826E34</td><td class="hex-cell">#625629</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD; background: #FAF8F5;"><td style="padding: 8px;">Fruta roja</td><td class="hex-cell">#C44238</td><td class="hex-cell">#E08A80</td><td class="hex-cell">#7E2816</td><td class="hex-cell">#5E1D10</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD;"><td style="padding: 8px;">Fruta negra</td><td class="hex-cell">#5A1F24</td><td class="hex-cell">#A36D6F</td><td class="hex-cell">#2E1113</td><td class="hex-cell">#1E0B0C</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD; background: #FAF8F5;"><td style="padding: 8px;">Herbáceo</td><td class="hex-cell">#3D5A40</td><td class="hex-cell">#6B8D71</td><td class="hex-cell">#243C27</td><td class="hex-cell">#182C1A</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD;"><td style="padding: 8px;">Herbario</td><td class="hex-cell">#4A7C59</td><td class="hex-cell">#8DB597</td><td class="hex-cell">#2E4A38</td><td class="hex-cell">#1E3226</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD; background: #FAF8F5;"><td style="padding: 8px;">Especias</td><td class="hex-cell">#C44238</td><td class="hex-cell">#E49778</td><td class="hex-cell">#7E2816</td><td class="hex-cell">#5E1D10</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD;"><td style="padding: 8px;">Levaduras</td><td class="hex-cell">#E8B86D</td><td class="hex-cell">#F5D9A0</td><td class="hex-cell">#846031</td><td class="hex-cell">#644824</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD; background: #FAF8F5;"><td style="padding: 8px;">FML</td><td class="hex-cell">#C9A961</td><td class="hex-cell">#ECDAA8</td><td class="hex-cell">#826E34</td><td class="hex-cell">#625629</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD;"><td style="padding: 8px;">Roble</td><td class="hex-cell">#8B7355</td><td class="hex-cell">#B8A68C</td><td class="hex-cell">#564532</td><td class="hex-cell">#413A26</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD; background: #FAF8F5;"><td style="padding: 8px;">Oxidativo</td><td class="hex-cell">#6B5D4F</td><td class="hex-cell">#A89B87</td><td class="hex-cell">#3C372C</td><td class="hex-cell">#2D2920</td></tr>
+            <tr style="border-bottom: 1px solid #E8E4DD;"><td style="padding: 8px;">Botella</td><td class="hex-cell">#8B7355</td><td class="hex-cell">#C0B098</td><td class="hex-cell">#564532</td><td class="hex-cell">#413A26</td></tr>
+            <tr style="background: #FAF8F5;"><td style="padding: 8px;">Defecto</td><td class="hex-cell">#B8B3A8</td><td class="hex-cell">#D9D9C9</td><td class="hex-cell">#6E6E60</td><td class="hex-cell">#525248</td></tr>
+        </tbody>
+    </table>
+</body>
+</html>

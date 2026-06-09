@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinora Rating Visuals - Gauge/Meter Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F5F1EB;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: #1A1A2E;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #8B7B6B;
+            margin-bottom: 32px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E8E4DD;
+        }
+
+        .gauge-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .gauge-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .gauge-label {
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        .gauge-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6B5D52;
+            margin-bottom: 16px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           GAUGE STYLES
+           ═══════════════════════════════════════════════════════════ */
+
+        .gauge-container {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gauge-svg {
+            overflow: visible;
+        }
+
+        /* 3/4 circle gauge (270°) */
+        .gauge-3to4 {
+            width: 80px;
+            height: 80px;
+        }
+
+        /* Large 3/4 gauge for detail view */
+        .gauge-3to4-lg {
+            width: 120px;
+            height: 120px;
+        }
+
+        /* PRO badge inside gauge (right under number) */
+        .gauge-pro-badge {
+            position: absolute;
+            bottom: 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: #1A1A2E;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        /* Community/Expert count badge (below PRO badge, same height across ratings) */
+        .gauge-count-badge {
+            position: absolute;
+            bottom: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: #F5F1EB;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 500;
+            color: #8B7B6B;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        /* Gauge stroke thickness */
+        .gauge-3to4-lg .gauge-bg {
+            stroke-width: 10;
+        }
+
+        .gauge-3to4-lg .gauge-fill {
+            stroke-width: 10;
+        }
+
+        /* Number positioning and size */
+        .gauge-number {
+            position: absolute;
+            font-weight: 600;
+            color: #722F37;
+            top: 30%;
+        }
+
+        /* Semi-circle gauge (180°) */
+        .gauge-semi {
+            width: 80px;
+            height: 42px;
+        }
+
+        /* 3/4 circle gauge (270°) */
+        .gauge-3to4 {
+            width: 80px;
+            height: 80px;
+        }
+
+        /* Full circle with gap (300°) */
+        .gauge-full {
+            width: 70px;
+            height: 70px;
+        }
+
+        /* Gauge paths */
+        .gauge-bg {
+            fill: none;
+            stroke: #E8E4DD;
+            stroke-linecap: round;
+        }
+
+        .gauge-fill {
+            fill: none;
+            stroke: #722F37;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .gauge-pro .gauge-fill {
+            stroke: #1A1A2E;
+        }
+
+        /* Tick marks */
+        .gauge-ticks text {
+            font-size: 7px;
+            fill: #A69A8E;
+            text-anchor: middle;
+        }
+
+        /* Needle */
+        .gauge-needle {
+            transform-origin: center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Center number */
+        .gauge-number {
+            position: absolute;
+            font-weight: 600;
+            color: #722F37;
+        }
+
+        .gauge-pro .gauge-number {
+            color: #1A1A2E;
+        }
+
+        /* Size variants */
+        .gauge-sm .gauge-number { font-size: 14px; }
+        .gauge-md .gauge-number { font-size: 18px; }
+        .gauge-lg .gauge-number { font-size: 24px; }
+
+        /* ═══════════════════════════════════════════════════════════
+           COMPARISON CARDS
+           ═══════════════════════════════════════════════════════════ */
+
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-card {
+            background: #FAF8F5;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .comparison-title {
+            font-size: 11px;
+            color: #A69A8E;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .rating-split {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .rating-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rating-divider {
+            width: 1px;
+            height: 80px;
+            background: #E8E4DD;
+        }
+
+        .pro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: #1A1A2E;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .rating-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-top: 6px;
+        }
+
+        /* Card view style */
+        .wine-card {
+            background: white;
+            border-radius: 10px;
+            padding: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            margin-bottom: 12px;
+        }
+
+        .wine-name {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .wine-meta {
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-bottom: 10px;
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gauge-compact {
+            width: 50px;
+            height: 26px;
+        }
+
+        .gauge-compact .gauge-number {
+            font-size: 10px;
+            bottom: -2px;
+        }
+
+        /* Mini gauge for inline */
+        .gauge-mini {
+            width: 40px;
+            height: 40px;
+        }
+
+        .gauge-mini .gauge-number {
+            font-size: 10px;
+        }
+
+        .pro-badge-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 6px;
+            background: #1A1A2E;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 0.3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍷 Vinora Rating Visuals - Gauge/Meter</h1>
+    <p class="subtitle">Speedometer-style rating display</p>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SEMI-CIRCLE GAUGE (180°)
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Semi-Circle Gauge (180°)</div>
+
+        <div class="gauge-row">
+            <div class="gauge-item">
+                <div class="gauge-title">4.3 Rating</div>
+                <div class="gauge-container gauge-md">
+                    <svg class="gauge-svg gauge-semi" viewBox="0 0 100 52">
+                        <!-- Background arc -->
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 10 50 A 40 40 0 0 1 90 50"/>
+                        <!-- Fill arc (4.3/5 = 86% = 155° of 180°) -->
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 10 50 A 40 40 0 0 1 90 50"
+                            stroke-dasharray="125.7"
+                            stroke-dashoffset="17.6"/>
+                        <!-- Ticks -->
+                        <g class="gauge-ticks">
+                            <text x="10" y="62">1</text>
+                            <text x="26" y="62">2</text>
+                            <text x="42" y="62">3</text>
+                            <text x="58" y="62">4</text>
+                            <text x="74" y="62">5</text>
+                        </g>
+                    </svg>
+                    <span class="gauge-number">4.3</span>
+                </div>
+                <span class="gauge-label">Community</span>
+            </div>
+
+            <div class="gauge-item">
+                <div class="gauge-title">5.0 Rating</div>
+                <div class="gauge-container gauge-md gauge-pro">
+                    <svg class="gauge-svg gauge-semi" viewBox="0 0 100 52">
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 10 50 A 40 40 0 0 1 90 50"/>
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 10 50 A 40 40 0 0 1 90 50"
+                            stroke-dasharray="125.7"
+                            stroke-dashoffset="0"/>
+                        <g class="gauge-ticks">
+                            <text x="10" y="62">1</text>
+                            <text x="26" y="62">2</text>
+                            <text x="42" y="62">3</text>
+                            <text x="58" y="62">4</text>
+                            <text x="74" y="62">5</text>
+                        </g>
+                    </svg>
+                    <span class="gauge-number">5.0</span>
+                </div>
+                <span class="gauge-label">PRO (Perfect)</span>
+            </div>
+
+            <div class="gauge-item">
+                <div class="gauge-title">2.5 Rating</div>
+                <div class="gauge-container gauge-md">
+                    <svg class="gauge-svg gauge-semi" viewBox="0 0 100 52">
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 10 50 A 40 40 0 0 1 90 50"/>
+                        <!-- 2.5/5 = 50% = 90° -->
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 10 50 A 40 40 0 0 1 90 50"
+                            stroke-dasharray="125.7"
+                            stroke-dashoffset="62.8"/>
+                        <g class="gauge-ticks">
+                            <text x="10" y="62">1</text>
+                            <text x="26" y="62">2</text>
+                            <text x="42" y="62">3</text>
+                            <text x="58" y="62">4</text>
+                            <text x="74" y="62">5</text>
+                        </g>
+                    </svg>
+                    <span class="gauge-number">2.5</span>
+                </div>
+                <span class="gauge-label">Low Rating</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         3/4 CIRCLE GAUGE (270°) - UPDATED
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">3/4 Circle Gauge (270°) - Number + Badge Under</div>
+
+        <div class="gauge-row">
+            <div class="gauge-item">
+                <div class="gauge-title">Community Rating</div>
+                <div class="gauge-container">
+                    <svg class="gauge-svg gauge-3to4-lg" viewBox="0 0 100 100">
+                        <!-- Background arc (270°, starts at 135°) -->
+                        <path class="gauge-bg" stroke-width="6"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                        <!-- Fill arc (4.3/5 = 86% of 270° = 232°) -->
+                        <path class="gauge-fill" stroke-width="6"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                            stroke-dasharray="188.5"
+                            stroke-dashoffset="26.4"/>
+                        <!-- Subtle scale marks -->
+                    </svg>
+                    <span class="gauge-number" style="font-size: 32px;">4.3</span>
+                    <span class="gauge-count-badge">2.4k valoraciones</span>
+                </div>
+            </div>
+
+            <div class="gauge-item">
+                <div class="gauge-title">PRO Rating</div>
+                <div class="gauge-container gauge-pro">
+                    <svg class="gauge-svg gauge-3to4-lg" viewBox="0 0 100 100">
+                        <path class="gauge-bg" stroke-width="6"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                        <!-- 4.6/5 = 92% of 270° = 248° -->
+                        <path class="gauge-fill" stroke-width="6"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                            stroke-dasharray="188.5"
+                            stroke-dashoffset="15"/>
+                    </svg>
+                    <span class="gauge-number" style="font-size: 32px;">4.6</span>
+                    <span class="gauge-pro-badge">PRO</span>
+                    <span class="gauge-count-badge">12 expertos</span>
+                </div>
+            </div>
+
+            <div class="gauge-item">
+                <div class="gauge-title">Lower Rating</div>
+                <div class="gauge-container">
+                    <svg class="gauge-svg gauge-3to4-lg" viewBox="0 0 100 100">
+                        <path class="gauge-bg" stroke-width="6"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                        <!-- 3.2/5 = 64% of 270° = 173° -->
+                        <path class="gauge-fill" stroke-width="6"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                            stroke-dasharray="188.5"
+                            stroke-dashoffset="67.8"/>
+                    </svg>
+                    <span class="gauge-number" style="font-size: 32px;">3.2</span>
+                    <span class="gauge-count-badge">856 valoraciones</span>
+                </div>
+            </div>
+
+            <div class="gauge-item">
+                <div class="gauge-title">Perfect Score</div>
+                <div class="gauge-container">
+                    <svg class="gauge-svg gauge-3to4-lg" viewBox="0 0 100 100">
+                        <path class="gauge-bg" stroke-width="6"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                        <!-- 5.0/5 = 100% of 270° = 270° (full) -->
+                        <path class="gauge-fill" stroke-width="6"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                            stroke-dasharray="188.5"
+                            stroke-dashoffset="0"/>
+                    </svg>
+                    <span class="gauge-number" style="font-size: 32px;">5.0</span>
+                    <span class="gauge-count-badge">12.5k valoraciones</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         DETAIL VIEW SIDE-BY-SIDE
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Detail View - Side by Side (Community + PRO)</div>
+
+        <div class="gauge-row">
+            <div class="gauge-item">
+                <div class="gauge-title">Wine Detail Sheet</div>
+                <div style="display: flex; gap: 48px; align-items: center; background: #FAF8F5; padding: 32px; border-radius: 16px;">
+                    <!-- Community Rating -->
+                    <div class="gauge-container">
+                        <svg class="gauge-svg gauge-3to4-lg" viewBox="0 0 100 100">
+                            <path class="gauge-bg" stroke-width="6"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                            <path class="gauge-fill" stroke-width="6"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                                stroke-dasharray="188.5"
+                                stroke-dashoffset="26.4"/>
+                            <text x="8" y="74" font-size="6" fill="#C0BCC6">1</text>
+                            <text x="8" y="58" font-size="6" fill="#C0BCC6">2</text>
+                            <text x="8" y="42" font-size="6" fill="#C0BCC6">3</text>
+                            <text x="50" y="12" font-size="6" fill="#C0BCC6" text-anchor="middle">4</text>
+                            <text x="92" y="42" font-size="6" fill="#C0BCC6">5</text>
+                        </svg>
+                        <span class="gauge-number" style="font-size: 32px;">4.3</span>
+                        <span class="gauge-count-badge">2.4k valoraciones</span>
+                    </div>
+
+                    <!-- Divider -->
+                    <div style="width: 1px; height: 100px; background: #E8E4DD;"></div>
+
+                    <!-- PRO Rating -->
+                    <div class="gauge-container gauge-pro">
+                        <svg class="gauge-svg gauge-3to4-lg" viewBox="0 0 100 100">
+                            <path class="gauge-bg" stroke-width="6"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                            <path class="gauge-fill" stroke-width="6"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                                stroke-dasharray="188.5"
+                                stroke-dashoffset="15"/>
+                            <text x="8" y="74" font-size="6" fill="#C0BCC6">1</text>
+                            <text x="8" y="58" font-size="6" fill="#C0BCC6">2</text>
+                            <text x="8" y="42" font-size="6" fill="#C0BCC6">3</text>
+                            <text x="50" y="12" font-size="6" fill="#C0BCC6" text-anchor="middle">4</text>
+                            <text x="92" y="42" font-size="6" fill="#C0BCC6">5</text>
+                        </svg>
+                        <span class="gauge-number" style="font-size: 32px;">4.6</span>
+                        <span class="gauge-pro-badge">PRO</span>
+                        <span class="gauge-count-badge">12 expertos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CARD VIEW
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Card View</div>
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="background: white; border-radius: 10px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); width: 200px;">
+                <div style="font-weight: 500; margin-bottom: 2px;">Ramón Bilbao Crianza</div>
+                <div style="font-size: 11px; color: #8B7B6B; margin-bottom: 12px;">Rioja DOCa · 2019</div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="gauge-container">
+                        <svg class="gauge-svg" viewBox="0 0 100 100" style="width: 70px; height: 70px;">
+                            <path class="gauge-bg" stroke-width="10"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                            <path class="gauge-fill" stroke-width="10"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                                stroke-dasharray="188.5"
+                                stroke-dashoffset="26.4"/>
+                        </svg>
+                        <span class="gauge-number" style="font-size: 16px;">4.3</span>
+                        <span class="gauge-count-badge" style="font-size: 7px; bottom: 10px;">2.4k</span>
+                    </div>
+                    <div class="gauge-container gauge-pro">
+                        <svg class="gauge-svg" viewBox="0 0 100 100" style="width: 70px; height: 70px;">
+                            <path class="gauge-bg" stroke-width="10"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                            <path class="gauge-fill" stroke-width="10"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                                stroke-dasharray="188.5"
+                                stroke-dashoffset="15"/>
+                        </svg>
+                        <span class="gauge-number" style="font-size: 16px;">4.6</span>
+                        <span class="gauge-pro-badge" style="font-size: 8px; bottom: 24px;">PRO</span>
+                        <span class="gauge-count-badge" style="font-size: 7px; bottom: 10px;">12 exp</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: white; border-radius: 10px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); width: 200px;">
+                <div style="font-weight: 500; margin-bottom: 2px;">Pingus 2019</div>
+                <div style="font-size: 11px; color: #8B7B6B; margin-bottom: 12px;">Ribera del Duero · 2019</div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="gauge-container">
+                        <svg class="gauge-svg" viewBox="0 0 100 100" style="width: 70px; height: 70px;">
+                            <path class="gauge-bg" stroke-width="10"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                            <path class="gauge-fill" stroke-width="10"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                                stroke-dasharray="188.5"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="gauge-number" style="font-size: 16px;">5.0</span>
+                        <span class="gauge-count-badge" style="font-size: 7px; bottom: 10px;">12.5k</span>
+                    </div>
+                    <div class="gauge-container gauge-pro">
+                        <svg class="gauge-svg" viewBox="0 0 100 100" style="width: 70px; height: 70px;">
+                            <path class="gauge-bg" stroke-width="10"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                            <path class="gauge-fill" stroke-width="10"
+                                d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                                stroke-dasharray="188.5"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="gauge-number" style="font-size: 16px;">5.0</span>
+                        <span class="gauge-pro-badge" style="font-size: 8px; bottom: 24px;">PRO</span>
+                        <span class="gauge-count-badge" style="font-size: 7px; bottom: 10px;">12 exp</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FULL CIRCLE WITH GAP (300°)
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Full Circle with Gap (300°)</div>
+
+        <div class="gauge-row">
+            <div class="gauge-item">
+                <div class="gauge-title">4.3 Rating</div>
+                <div class="gauge-container gauge-md">
+                    <svg class="gauge-svg gauge-full" viewBox="0 0 100 100">
+                        <!-- Background arc (300° gap at bottom) -->
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 15.9 84.1 A 40 40 0 1 1 84.1 84.1"/>
+                        <!-- Fill arc (4.3/5 = 86% of 300° = 258°) -->
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 15.9 84.1 A 40 40 0 1 1 84.1 84.1"
+                            stroke-dasharray="209.4"
+                            stroke-dashoffset="29.3"/>
+                        <!-- Scale numbers -->
+                        <text x="15" y="90" font-size="6" fill="#A69A8E">1</text>
+                        <text x="5" y="72" font-size="6" fill="#A69A8E">2</text>
+                        <text x="5" y="55" font-size="6" fill="#A69A8E">3</text>
+                        <text x="25" y="30" font-size="6" fill="#A69A8E">4</text>
+                        <text x="50" y="22" font-size="6" fill="#A69A8E" text-anchor="middle">5</text>
+                    </svg>
+                    <span class="gauge-number">4.3</span>
+                </div>
+                <span class="gauge-label">Community</span>
+            </div>
+
+            <div class="gauge-item">
+                <div class="gauge-title">4.6 PRO</div>
+                <div class="gauge-container gauge-md gauge-pro">
+                    <svg class="gauge-svg gauge-full" viewBox="0 0 100 100">
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 15.9 84.1 A 40 40 0 1 1 84.1 84.1"/>
+                        <!-- 4.6/5 = 92% of 300° = 276° -->
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 15.9 84.1 A 40 40 0 1 1 84.1 84.1"
+                            stroke-dasharray="209.4"
+                            stroke-dashoffset="16.7"/>
+                        <text x="15" y="90" font-size="6" fill="#A69A8E">1</text>
+                        <text x="5" y="72" font-size="6" fill="#A69A8E">2</text>
+                        <text x="5" y="55" font-size="6" fill="#A69A8E">3</text>
+                        <text x="25" y="30" font-size="6" fill="#A69A8E">4</text>
+                        <text x="50" y="22" font-size="6" fill="#A69A8E" text-anchor="middle">5</text>
+                    </svg>
+                    <span class="gauge-number">4.6</span>
+                </div>
+                <span class="gauge-label">PRO</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         WITH NEEDLE (Classic Speedometer)
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">With Needle (Classic Speedometer)</div>
+
+        <div class="gauge-row">
+            <div class="gauge-item">
+                <div class="gauge-title">4.3 Rating</div>
+                <div class="gauge-container gauge-md">
+                    <svg class="gauge-svg gauge-semi" viewBox="0 0 100 60">
+                        <!-- Colored zones -->
+                        <path stroke-width="10" fill="none" stroke="#E8E4DD"
+                            d="M 10 50 A 40 40 0 0 1 90 50"/>
+                        <!-- Red zone (1-2) -->
+                        <path stroke-width="10" fill="none" stroke="#E85D4E"
+                            d="M 10 50 A 40 40 0 0 1 28.7 28.7"
+                            stroke-dasharray="62.8" stroke-dashoffset="0"/>
+                        <!-- Yellow zone (2-4) -->
+                        <path stroke-width="10" fill="none" stroke="#E8B86D"
+                            d="M 28.7 28.7 A 40 40 0 0 1 71.3 28.7"
+                            stroke-dasharray="125.7" stroke-dashoffset="0"/>
+                        <!-- Green zone (4-5) -->
+                        <path stroke-width="10" fill="none" stroke="#7B9B7A"
+                            d="M 71.3 28.7 A 40 40 0 0 1 90 50"
+                            stroke-dasharray="62.8" stroke-dashoffset="0"/>
+                        <!-- Needle (pointing at 4.3 = 86% = 155°) -->
+                        <g class="gauge-needle" style="transform: rotate(-25deg); transform-origin: 50px 50px;">
+                            <polygon points="50,15 47,50 53,50" fill="#1A1A2E"/>
+                            <circle cx="50" cy="50" r="4" fill="#1A1A2E"/>
+                        </g>
+                    </svg>
+                    <span class="gauge-number" style="bottom: -5px;">4.3</span>
+                </div>
+                <span class="gauge-label">With Color Zones</span>
+            </div>
+
+            <div class="gauge-item">
+                <div class="gauge-title">4.6 PRO</div>
+                <div class="gauge-container gauge-md gauge-pro">
+                    <svg class="gauge-svg gauge-semi" viewBox="0 0 100 60">
+                        <path stroke-width="10" fill="none" stroke="#E8E4DD"
+                            d="M 10 50 A 40 40 0 0 1 90 50"/>
+                        <path stroke-width="10" fill="none" stroke="#E85D4E"
+                            d="M 10 50 A 40 40 0 0 1 28.7 28.7"/>
+                        <path stroke-width="10" fill="none" stroke="#E8B86D"
+                            d="M 28.7 28.7 A 40 40 0 0 1 71.3 28.7"/>
+                        <path stroke-width="10" fill="none" stroke="#7B9B7A"
+                            d="M 71.3 28.7 A 40 40 0 0 1 90 50"/>
+                        <!-- Needle (4.6 = 92% = 166°) -->
+                        <g class="gauge-needle" style="transform: rotate(-14deg); transform-origin: 50px 50px;">
+                            <polygon points="50,15 47,50 53,50" fill="#722F37"/>
+                            <circle cx="50" cy="50" r="4" fill="#722F37"/>
+                        </g>
+                    </svg>
+                    <span class="gauge-number" style="bottom: -5px; color: #1A1A2E;">4.6</span>
+                </div>
+                <span class="gauge-label">PRO Needle</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         DETAIL VIEW COMPARISON
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Detail View Comparison</div>
+
+        <div class="comparison">
+            <!-- Semi-circle -->
+            <div class="comparison-card">
+                <div class="comparison-title">Semi-Circle (180°)</div>
+                <div class="rating-split">
+                    <div class="rating-side">
+                        <div class="gauge-container gauge-lg">
+                            <svg class="gauge-svg gauge-semi" viewBox="0 0 100 52" style="width: 100px; height: 52px;">
+                                <path class="gauge-bg" stroke-width="10"
+                                    d="M 10 50 A 40 40 0 0 1 90 50"/>
+                                <path class="gauge-fill" stroke-width="10"
+                                    d="M 10 50 A 40 40 0 0 1 90 50"
+                                    stroke-dasharray="125.7"
+                                    stroke-dashoffset="17.6"/>
+                                <g class="gauge-ticks">
+                                    <text x="10" y="62">1</text>
+                                    <text x="26" y="62">2</text>
+                                    <text x="42" y="62">3</text>
+                                    <text x="58" y="62">4</text>
+                                    <text x="74" y="62">5</text>
+                                </g>
+                            </svg>
+                            <span class="gauge-number">4.3</span>
+                        </div>
+                        <span class="rating-count">2.4k valoraciones</span>
+                    </div>
+                    <div class="rating-divider"></div>
+                    <div class="rating-side">
+                        <span class="pro-badge">PRO</span>
+                        <div class="gauge-container gauge-lg gauge-pro">
+                            <svg class="gauge-svg gauge-semi" viewBox="0 0 100 52" style="width: 100px; height: 52px;">
+                                <path class="gauge-bg" stroke-width="10"
+                                    d="M 10 50 A 40 40 0 0 1 90 50"/>
+                                <path class="gauge-fill" stroke-width="10"
+                                    d="M 10 50 A 40 40 0 0 1 90 50"
+                                    stroke-dasharray="125.7"
+                                    stroke-dashoffset="0"/>
+                                <g class="gauge-ticks">
+                                    <text x="10" y="62">1</text>
+                                    <text x="26" y="62">2</text>
+                                    <text x="42" y="62">3</text>
+                                    <text x="58" y="62">4</text>
+                                    <text x="74" y="62">5</text>
+                                </g>
+                            </svg>
+                            <span class="gauge-number">4.6</span>
+                        </div>
+                        <span class="rating-count">12 expertos</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3/4 circle -->
+            <div class="comparison-card">
+                <div class="comparison-title">3/4 Circle (270°)</div>
+                <div class="rating-split">
+                    <div class="rating-side">
+                        <div class="gauge-container gauge-lg">
+                            <svg class="gauge-svg gauge-3to4" viewBox="0 0 100 100" style="width: 90px; height: 90px;">
+                                <path class="gauge-bg" stroke-width="10"
+                                    d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                                <path class="gauge-fill" stroke-width="10"
+                                    d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                                    stroke-dasharray="188.5"
+                                    stroke-dashoffset="26.4"/>
+                                <text x="8" y="74" font-size="7" fill="#A69A8E">1</text>
+                                <text x="8" y="58" font-size="7" fill="#A69A8E">2</text>
+                                <text x="8" y="42" font-size="7" fill="#A69A8E">3</text>
+                                <text x="50" y="15" font-size="7" fill="#A69A8E" text-anchor="middle">4</text>
+                                <text x="92" y="42" font-size="7" fill="#A69A8E">5</text>
+                            </svg>
+                            <span class="gauge-number">4.3</span>
+                        </div>
+                        <span class="rating-count">2.4k valoraciones</span>
+                    </div>
+                    <div class="rating-divider"></div>
+                    <div class="rating-side">
+                        <span class="pro-badge">PRO</span>
+                        <div class="gauge-container gauge-lg gauge-pro">
+                            <svg class="gauge-svg gauge-3to4" viewBox="0 0 100 100" style="width: 90px; height: 90px;">
+                                <path class="gauge-bg" stroke-width="10"
+                                    d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                                <path class="gauge-fill" stroke-width="10"
+                                    d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                                    stroke-dasharray="188.5"
+                                    stroke-dashoffset="15"/>
+                                <text x="8" y="74" font-size="7" fill="#A69A8E">1</text>
+                                <text x="8" y="58" font-size="7" fill="#A69A8E">2</text>
+                                <text x="8" y="42" font-size="7" fill="#A69A8E">3</text>
+                                <text x="50" y="15" font-size="7" fill="#A69A8E" text-anchor="middle">4</text>
+                                <text x="92" y="42" font-size="7" fill="#A69A8E">5</text>
+                            </svg>
+                            <span class="gauge-number">4.6</span>
+                        </div>
+                        <span class="rating-count">12 expertos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CARD VIEW
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Card View</div>
+
+        <div class="wine-card">
+            <div class="wine-name">Ramón Bilbao Crianza</div>
+            <div class="wine-meta">Rioja DOCa · 2019 · Tempranillo</div>
+            <div class="card-rating">
+                <!-- Mini gauge for community -->
+                <div class="gauge-container gauge-sm">
+                    <svg class="gauge-svg gauge-mini" viewBox="0 0 100 100" style="width: 44px; height: 44px;">
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                            stroke-dasharray="188.5"
+                            stroke-dashoffset="26.4"/>
+                    </svg>
+                    <span class="gauge-number" style="font-size: 10px;">4.3</span>
+                </div>
+
+                <span class="pro-badge-inline">PRO</span>
+
+                <!-- Mini gauge for PRO -->
+                <div class="gauge-container gauge-sm gauge-pro">
+                    <svg class="gauge-svg gauge-mini" viewBox="0 0 100 100" style="width: 44px; height: 44px;">
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                            stroke-dasharray="188.5"
+                            stroke-dashoffset="15"/>
+                    </svg>
+                    <span class="gauge-number" style="font-size: 10px;">4.6</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="wine-card">
+            <div class="wine-name">Pingus 2019</div>
+            <div class="wine-meta">Ribera del Duero · 2019 · Tempranillo</div>
+            <div class="card-rating">
+                <div class="gauge-container gauge-sm">
+                    <svg class="gauge-svg gauge-mini" viewBox="0 0 100 100" style="width: 44px; height: 44px;">
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                            stroke-dasharray="188.5"
+                            stroke-dashoffset="0"/>
+                    </svg>
+                    <span class="gauge-number" style="font-size: 10px;">5.0</span>
+                </div>
+
+                <span class="pro-badge-inline">PRO</span>
+
+                <div class="gauge-container gauge-sm gauge-pro">
+                    <svg class="gauge-svg gauge-mini" viewBox="0 0 100 100" style="width: 44px; height: 44px;">
+                        <path class="gauge-bg" stroke-width="10"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"/>
+                        <path class="gauge-fill" stroke-width="10"
+                            d="M 15.9 69.1 A 40 40 0 1 1 84.1 69.1"
+                            stroke-dasharray="188.5"
+                            stroke-dashoffset="0"/>
+                    </svg>
+                    <span class="gauge-number" style="font-size: 10px;">5.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

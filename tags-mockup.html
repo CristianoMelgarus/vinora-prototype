@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinora Tags Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: #F5F1EB;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: #1A1A2E;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B5D52;
+            margin: 32px 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .note {
+            font-size: 13px;
+            color: #8B7B6B;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        /* ───── OPTION B: Left-Aligned ───── */
+        .tag-option-b {
+            display: inline-flex;
+            flex-direction: column;
+            padding: 8px 14px;
+            background: #FFFFFF;
+            border: 1.5px solid #722F37;
+            border-radius: 12px;
+            min-width: 120px;
+        }
+
+        .tag-option-b .tag-main {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-option-b .tag-emoji {
+            font-size: 18px;
+        }
+
+        .tag-option-b .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-top: 2px;
+            padding-left: 2px;
+        }
+
+        /* ───── OPTION C: Icon Column ───── */
+        .tag-option-c {
+            display: inline-flex;
+            flex-direction: row;
+            padding: 8px 10px 8px 8px;
+            background: #FFFFFF;
+            border: 1.5px solid #722F37;
+            border-radius: 12px;
+            min-width: 130px;
+        }
+
+        .tag-option-c .tag-icon-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            flex-shrink: 0;
+        }
+
+        .tag-option-c .tag-emoji {
+            font-size: 24px;
+        }
+
+        .tag-option-c .tag-text-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        .tag-option-c .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-option-c .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── OPTION C+: Colored Circle ───── */
+        .tag-option-c-plus {
+            display: inline-flex;
+            flex-direction: row;
+            padding: 8px 10px 8px 8px;
+            background: #FFFFFF;
+            border: 1.5px solid #722F37;
+            border-radius: 12px;
+            min-width: 130px;
+        }
+
+        .tag-option-c-plus .tag-icon-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            flex-shrink: 0;
+        }
+
+        .tag-option-c-plus .tag-emoji-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .tag-option-c-plus .circle-red { background: #722F37; }
+        .tag-option-c-plus .circle-yellow { background: #C9A961; }
+        .tag-option-c-plus .circle-green { background: #4A7C59; }
+        .tag-option-c-plus .circle-purple { background: #8B3A44; }
+        .tag-option-c-plus .circle-orange { background: #E8B86D; }
+
+        .tag-option-c-plus .tag-text-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        .tag-option-c-plus .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-option-c-plus .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── HYBRID: B layout with bigger emoji ───── */
+        .tag-hybrid {
+            display: inline-flex;
+            flex-direction: column;
+            padding: 8px 14px;
+            background: #FFFFFF;
+            border: 1.5px solid #722F37;
+            border-radius: 12px;
+            min-width: 120px;
+        }
+
+        .tag-hybrid .tag-main {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-hybrid .tag-emoji {
+            font-size: 22px;
+        }
+
+        .tag-hybrid .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-top: 2px;
+            padding-left: 2px;
+        }
+
+        /* ───── OPTION SPLIT-A: Colored Split (two backgrounds) ───── */
+        .tag-split-a {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-split-a .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tag-split-a .bg-red { background: #722F37; }
+        .tag-split-a .bg-yellow { background: #C9A961; }
+        .tag-split-a .bg-green { background: #4A7C59; }
+        .tag-split-a .bg-purple { background: #8B3A44; }
+        .tag-split-a .bg-orange { background: #E8B86D; }
+
+        .tag-split-a .tag-emoji {
+            font-size: 20px;
+        }
+
+        .tag-split-a .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            background: #FFFFFF;
+        }
+
+        .tag-split-a .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-split-a .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── OPTION SPLIT-B: Divider Line ───── */
+        .tag-split-b {
+            display: inline-flex;
+            flex-direction: row;
+            background: #FFFFFF;
+            border: 1.5px solid #722F37;
+            border-radius: 12px;
+            overflow: hidden;
+            min-width: 130px;
+        }
+
+        .tag-split-b .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .tag-split-b .tag-icon-side::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 6px;
+            bottom: 6px;
+            width: 1px;
+            background: #E8E4DD;
+        }
+
+        .tag-split-b .tag-emoji {
+            font-size: 22px;
+        }
+
+        .tag-split-b .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            padding-left: 12px;
+        }
+
+        .tag-split-b .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-split-b .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── OPTION SPLIT-A2: Tinted Background (light tint on text side) ───── */
+        .tag-split-a2 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-split-a2 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tag-split-a2 .bg-red { background: #722F37; }
+        .tag-split-a2 .bg-yellow { background: #C9A961; }
+        .tag-split-a2 .bg-green { background: #4A7C59; }
+        .tag-split-a2 .bg-purple { background: #8B3A44; }
+        .tag-split-a2 .bg-orange { background: #E8B86D; }
+
+        .tag-split-a2 .tag-emoji {
+            font-size: 20px;
+        }
+
+        .tag-split-a2 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        /* Stronger, more visible tints */
+        .tag-split-a2 .tint-red { background: #EBD4D6; }
+        .tag-split-a2 .tint-yellow { background: #EBE8D4; }
+        .tag-split-a2 .tint-green { background: #D4E5DB; }
+        .tag-split-a2 .tint-purple { background: #EBD4DE; }
+        .tag-split-a2 .tint-orange { background: #EBDED4; }
+
+        .tag-split-a2 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag-split-a2 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ───── OPTION SPLIT-A3: Tinted + Monochromatic Watermark (grayscale filter) ───── */
+        .tag-split-a3 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-split-a3 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tag-split-a3 .bg-red { background: #722F37; }
+        .tag-split-a3 .bg-yellow { background: #C9A961; }
+        .tag-split-a3 .bg-green { background: #4A7C59; }
+        .tag-split-a3 .bg-purple { background: #8B3A44; }
+        .tag-split-a3 .bg-orange { background: #E8B86D; }
+
+        .tag-split-a3 .tag-emoji {
+            font-size: 20px;
+        }
+
+        .tag-split-a3 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        /* Stronger, more visible tints */
+        .tag-split-a3 .tint-red { background: #EBD4D6; }
+        .tag-split-a3 .tint-yellow { background: #EBE8D4; }
+        .tag-split-a3 .tint-green { background: #D4E5DB; }
+        .tag-split-a3 .tint-purple { background: #EBD4DE; }
+        .tag-split-a3 .tint-orange { background: #EBDED4; }
+
+        /* Monochromatic watermark - grayscale filter applied */
+        .tag-split-a3 .watermark {
+            position: absolute;
+            right: 4px;
+            bottom: 2px;
+            font-size: 32px;
+            opacity: 0.15;
+            pointer-events: none;
+            line-height: 1;
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+        }
+
+        .tag-split-a3 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag-split-a3 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ───── OPTION SPLIT-B1: Text-Style Emoji (black/white) ───── */
+        .tag-split-b1 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-split-b1 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tag-split-b1 .bg-red { background: #722F37; }
+        .tag-split-b1 .bg-yellow { background: #C9A961; }
+        .tag-split-b1 .bg-green { background: #4A7C59; }
+        .tag-split-b1 .bg-purple { background: #8B3A44; }
+        .tag-split-b1 .bg-orange { background: #E8B86D; }
+
+        .tag-split-b1 .tag-emoji {
+            font-size: 20px;
+        }
+
+        .tag-split-b1 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .tag-split-b1 .tint-red { background: #EBD4D6; }
+        .tag-split-b1 .tint-yellow { background: #EBE8D4; }
+        .tag-split-b1 .tint-green { background: #D4E5DB; }
+        .tag-split-b1 .tint-purple { background: #EBD4DE; }
+        .tag-split-b1 .tint-orange { background: #EBDED4; }
+
+        /* Text-style emoji using variation selector */
+        .tag-split-b1 .watermark {
+            position: absolute;
+            right: 4px;
+            bottom: 2px;
+            font-size: 32px;
+            opacity: 0.3;
+            pointer-events: none;
+            line-height: 1;
+            font-family: 'Segoe UI Emoji', 'Apple Color Emoji', sans-serif;
+        }
+
+        .tag-split-b1 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag-split-b1 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ───── OPTION SPLIT-B2: CSS Tint Overlay ───── */
+        .tag-split-b2 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-split-b2 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tag-split-b2 .bg-red { background: #722F37; }
+        .tag-split-b2 .bg-yellow { background: #C9A961; }
+        .tag-split-b2 .bg-green { background: #4A7C59; }
+        .tag-split-b2 .bg-purple { background: #8B3A44; }
+        .tag-split-b2 .bg-orange { background: #E8B86D; }
+
+        .tag-split-b2 .tag-emoji {
+            font-size: 20px;
+        }
+
+        .tag-split-b2 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .tag-split-b2 .tint-red { background: #EBD4D6; }
+        .tag-split-b2 .tint-yellow { background: #EBE8D4; }
+        .tag-split-b2 .tint-green { background: #D4E5DB; }
+        .tag-split-b2 .tint-purple { background: #EBD4DE; }
+        .tag-split-b2 .tint-orange { background: #EBDED4; }
+
+        /* Watermark with color overlay */
+        .tag-split-b2 .watermark {
+            position: absolute;
+            right: 4px;
+            bottom: 2px;
+            font-size: 32px;
+            opacity: 0.25;
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        /* Color overlay for red tags */
+        .tag-split-b2 .tint-red .watermark {
+            color: #722F37;
+            background: linear-gradient(135deg, rgba(114,47,55,0.4) 0%, rgba(114,47,55,0.2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Color overlay for yellow tags */
+        .tag-split-b2 .tint-yellow .watermark {
+            color: #C9A961;
+            background: linear-gradient(135deg, rgba(201,166,97,0.4) 0%, rgba(201,166,97,0.2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Color overlay for orange tags */
+        .tag-split-b2 .tint-orange .watermark {
+            color: #E8B86D;
+            background: linear-gradient(135deg, rgba(232,184,109,0.4) 0%, rgba(232,184,109,0.2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tag-split-b2 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag-split-b2 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ───── OPTION SPLIT-B3: Background Blend Mode ───── */
+        .tag-split-b3 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-split-b3 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tag-split-b3 .bg-red { background: #722F37; }
+        .tag-split-b3 .bg-yellow { background: #C9A961; }
+        .tag-split-b3 .bg-green { background: #4A7C59; }
+        .tag-split-b3 .bg-purple { background: #8B3A44; }
+        .tag-split-b3 .bg-orange { background: #E8B86D; }
+
+        .tag-split-b3 .tag-emoji {
+            font-size: 20px;
+        }
+
+        .tag-split-b3 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .tag-split-b3 .tint-red { background: #EBD4D6; }
+        .tag-split-b3 .tint-yellow { background: #EBE8D4; }
+        .tag-split-b3 .tint-green { background: #D4E5DB; }
+        .tag-split-b3 .tint-purple { background: #EBD4DE; }
+        .tag-split-b3 .tint-orange { background: #EBDED4; }
+
+        /* Watermark with mix-blend-mode */
+        .tag-split-b3 .watermark {
+            position: absolute;
+            right: 4px;
+            bottom: 2px;
+            font-size: 32px;
+            opacity: 0.5;
+            pointer-events: none;
+            line-height: 1;
+            mix-blend-mode: multiply;
+        }
+
+        .tag-split-b3 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag-split-b3 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ───── OPTION MAIN-A: White Emoji on Dark Background ───── */
+        .tag-main-a {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-main-a .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tag-main-a .bg-red { background: #722F37; }
+        .tag-main-a .bg-yellow { background: #C9A961; }
+        .tag-main-a .bg-green { background: #4A7C59; }
+        .tag-main-a .bg-purple { background: #8B3A44; }
+        .tag-main-a .bg-orange { background: #E8B86D; }
+
+        /* Make emoji appear white using brightness + drop-shadow trick */
+        .tag-main-a .tag-emoji {
+            font-size: 20px;
+            filter: brightness(0) invert(1);
+            -webkit-filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+
+        .tag-main-a .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .tag-main-a .tint-red { background: #EBD4D6; }
+        .tag-main-a .tint-yellow { background: #EBE8D4; }
+        .tag-main-a .tint-green { background: #D4E5DB; }
+        .tag-main-a .tint-purple { background: #EBD4DE; }
+        .tag-main-a .tint-orange { background: #EBDED4; }
+
+        .tag-main-a .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-main-a .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── OPTION MAIN-B: Light Tint Emoji on Dark Background ───── */
+        .tag-main-b {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-main-b .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tag-main-b .bg-red { background: #722F37; }
+        .tag-main-b .bg-yellow { background: #C9A961; }
+        .tag-main-b .bg-green { background: #4A7C59; }
+        .tag-main-b .bg-purple { background: #8B3A44; }
+        .tag-main-b .bg-orange { background: #E8B86D; }
+
+        /* Light tint emoji - use sepia + brightness for tinted effect */
+        .tag-main-b .tag-emoji {
+            font-size: 20px;
+            opacity: 0.7;
+        }
+
+        /* Red emoji gets lighter red/wash */
+        .tag-main-b .bg-red .tag-emoji {
+            filter: brightness(1.8) sepia(0.3) saturate(0.5);
+            -webkit-filter: brightness(1.8) sepia(0.3) saturate(0.5);
+        }
+        /* Yellow emoji gets lighter yellow/wash */
+        .tag-main-b .bg-yellow .tag-emoji {
+            filter: brightness(1.5) sepia(0.2) saturate(0.8);
+            -webkit-filter: brightness(1.5) sepia(0.2) saturate(0.8);
+        }
+        /* Green emoji gets lighter green/wash */
+        .tag-main-b .bg-green .tag-emoji {
+            filter: brightness(1.6) sepia(0.2) saturate(0.3);
+            -webkit-filter: brightness(1.6) sepia(0.2) saturate(0.3);
+        }
+        /* Purple emoji gets lighter purple/wash */
+        .tag-main-b .bg-purple .tag-emoji {
+            filter: brightness(1.7) sepia(0.2) saturate(0.4);
+            -webkit-filter: brightness(1.7) sepia(0.2) saturate(0.4);
+        }
+        /* Orange emoji gets lighter orange/wash */
+        .tag-main-b .bg-orange .tag-emoji {
+            filter: brightness(1.6) sepia(0.3) saturate(0.6);
+            -webkit-filter: brightness(1.6) sepia(0.3) saturate(0.6);
+        }
+
+        .tag-main-b .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .tag-main-b .tint-red { background: #EBD4D6; }
+        .tag-main-b .tint-yellow { background: #EBE8D4; }
+        .tag-main-b .tint-green { background: #D4E5DB; }
+        .tag-main-b .tint-purple { background: #EBD4DE; }
+        .tag-main-b .tint-orange { background: #EBDED4; }
+
+        .tag-main-b .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-main-b .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── BW-1: Pure Grayscale ───── */
+        .tag-bw1 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-bw1 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+            background: #1A1A2E;
+        }
+
+        .tag-bw1 .tag-emoji {
+            font-size: 20px;
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+        }
+
+        .tag-bw1 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            background: #FFFFFF;
+        }
+
+        .tag-bw1 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-bw1 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── BW-2: High Contrast B&W ───── */
+        .tag-bw2 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #1A1A2E;
+            min-width: 130px;
+        }
+
+        .tag-bw2 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+            background: #1A1A2E;
+        }
+
+        .tag-bw2 .tag-emoji {
+            font-size: 20px;
+            filter: grayscale(100%) contrast(200%) brightness(1.2);
+            -webkit-filter: grayscale(100%) contrast(200%) brightness(1.2);
+        }
+
+        .tag-bw2 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            background: #FFFFFF;
+        }
+
+        .tag-bw2 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-bw2 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── DUOTONE-1: Red + White Duotone ───── */
+        .tag-duo1 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-duo1 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+            background: #722F37;
+        }
+
+        /* Duotone: grayscale + red overlay for darks, white for lights */
+        .tag-duo1 .tag-emoji {
+            font-size: 20px;
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+            position: relative;
+        }
+
+        .tag-duo1 .tag-emoji::before {
+            content: attr(data-emoji);
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+            mix-blend-mode: color-burn;
+            opacity: 0.6;
+            color: #722F37;
+        }
+
+        .tag-duo1 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            background: #EBD4D6;
+        }
+
+        .tag-duo1 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-duo1 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── DUOTONE-2: Two-Color with SVG Filter ───── */
+        .tag-duo2 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-duo2 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+            background: #722F37;
+        }
+
+        /* Apply SVG duotone filter */
+        .tag-duo2 .tag-emoji {
+            font-size: 20px;
+            filter: url(#duotone-red);
+            -webkit-filter: url(#duotone-red);
+        }
+
+        .tag-duo2 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            background: #EBD4D6;
+        }
+
+        .tag-duo2 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-duo2 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* ───── DUOTONE-3: Sepia + Tint (Two-Tone) ───── */
+        .tag-duo3 {
+            display: inline-flex;
+            flex-direction: row;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #722F37;
+            min-width: 130px;
+        }
+
+        .tag-duo3 .tag-icon-side {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+            background: #722F37;
+        }
+
+        /* Sepia base + red tint overlay */
+        .tag-duo3 .tag-emoji {
+            font-size: 20px;
+            filter: sepia(100%) hue-rotate(-30deg) saturate(200%);
+            -webkit-filter: sepia(100%) hue-rotate(-30deg) saturate(200%);
+            opacity: 0.85;
+        }
+
+        .tag-duo3 .tag-text-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            padding: 8px 12px;
+            background: #EBD4D6;
+        }
+
+        .tag-duo3 .tag-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1A2E;
+        }
+
+        .tag-duo3 .tag-count {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        /* Comparison section */
+        .comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 32px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .comparison-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .comparison-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #722F37;
+            min-width: 60px;
+            padding-top: 8px;
+        }
+
+        .comparison-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG Filters for Duotone Effect -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;">
+        <defs>
+            <filter id="duotone-red">
+                <feColorMatrix type="matrix" values="
+                    0.45 0 0 0 0.45
+                    0.18 0 0 0 0.18
+                    0.22 0 0 0 0.22
+                    0 0 0 1 0
+                "/>
+                <feComponentTransfer>
+                    <feFuncR type="table" tableValues="0.3 1"/>
+                    <feFuncG type="table" tableValues="0.1 1"/>
+                    <feFuncB type="table" tableValues="0.15 1"/>
+                </feComponentTransfer>
+            </filter>
+        </defs>
+    </svg>
+
+    <h1>🏷️ Vinora Tags Mockup</h1>
+    <p class="note">Comparing different tag layouts. All use the wine-primary border color for better hierarchy.</p>
+
+    <h2>Option B: Left-Aligned (compact)</h2>
+    <div class="tags-row">
+        <div class="tag-option-b">
+            <div class="tag-main">
+                <span class="tag-emoji">🍒</span>
+                <span>Frutas rojas</span>
+            </div>
+            <span class="tag-count">45 coincidencias</span>
+        </div>
+        <div class="tag-option-b">
+            <div class="tag-main">
+                <span class="tag-emoji">🍋</span>
+                <span>Cítricos</span>
+            </div>
+            <span class="tag-count">32 coincidencias</span>
+        </div>
+        <div class="tag-option-b">
+            <div class="tag-main">
+                <span class="tag-emoji">🪵</span>
+                <span>Roble</span>
+            </div>
+            <span class="tag-count">28 coincidencias</span>
+        </div>
+        <div class="tag-option-b">
+            <div class="tag-main">
+                <span class="tag-emoji">🌶️</span>
+                <span>Especias</span>
+            </div>
+            <span class="tag-count">19 coincidencias</span>
+        </div>
+        <div class="tag-option-b">
+            <div class="tag-main">
+                <span class="tag-emoji">🌸</span>
+                <span>Floral</span>
+            </div>
+            <span class="tag-count">15 coincidencias</span>
+        </div>
+    </div>
+
+    <h2>Option C: Icon Column (bigger emoji)</h2>
+    <div class="tags-row">
+        <div class="tag-option-c">
+            <div class="tag-icon-col">
+                <span class="tag-emoji">🍒</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Frutas rojas</span>
+                <span class="tag-count">45 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-option-c">
+            <div class="tag-icon-col">
+                <span class="tag-emoji">🍋</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Cítricos</span>
+                <span class="tag-count">32 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-option-c">
+            <div class="tag-icon-col">
+                <span class="tag-emoji">🪵</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Roble</span>
+                <span class="tag-count">28 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-option-c">
+            <div class="tag-icon-col">
+                <span class="tag-emoji">🌶️</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Especias</span>
+                <span class="tag-count">19 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-option-c">
+            <div class="tag-icon-col">
+                <span class="tag-emoji">🌸</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Floral</span>
+                <span class="tag-count">15 coincidencias</span>
+            </div>
+        </div>
+    </div>
+
+    <h2>Option C+: Colored Circles (alternative)</h2>
+    <div class="tags-row">
+        <div class="tag-option-c-plus">
+            <div class="tag-icon-col">
+                <span class="tag-emoji-circle circle-red">🍒</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Frutas rojas</span>
+                <span class="tag-count">45 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-option-c-plus">
+            <div class="tag-icon-col">
+                <span class="tag-emoji-circle circle-yellow">🍋</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Cítricos</span>
+                <span class="tag-count">32 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-option-c-plus">
+            <div class="tag-icon-col">
+                <span class="tag-emoji-circle circle-orange">🪵</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Roble</span>
+                <span class="tag-count">28 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-option-c-plus">
+            <div class="tag-icon-col">
+                <span class="tag-emoji-circle circle-red">🌶️</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Especias</span>
+                <span class="tag-count">19 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-option-c-plus">
+            <div class="tag-icon-col">
+                <span class="tag-emoji-circle circle-purple">🌸</span>
+            </div>
+            <div class="tag-text-col">
+                <span class="tag-label">Floral</span>
+                <span class="tag-count">15 coincidencias</span>
+            </div>
+        </div>
+    </div>
+
+    <h2>Hybrid: B layout + Bigger Emoji</h2>
+    <div class="tags-row">
+        <div class="tag-hybrid">
+            <div class="tag-main">
+                <span class="tag-emoji">🍒</span>
+                <span>Frutas rojas</span>
+            </div>
+            <span class="tag-count">45 coincidencias</span>
+        </div>
+        <div class="tag-hybrid">
+            <div class="tag-main">
+                <span class="tag-emoji">🍋</span>
+                <span>Cítricos</span>
+            </div>
+            <span class="tag-count">32 coincidencias</span>
+        </div>
+        <div class="tag-hybrid">
+            <div class="tag-main">
+                <span class="tag-emoji">🪵</span>
+                <span>Roble</span>
+            </div>
+            <span class="tag-count">28 coincidencias</span>
+        </div>
+        <div class="tag-hybrid">
+            <div class="tag-main">
+                <span class="tag-emoji">🌶️</span>
+                <span>Especias</span>
+            </div>
+            <span class="tag-count">19 coincidencias</span>
+        </div>
+        <div class="tag-hybrid">
+            <div class="tag-main">
+                <span class="tag-emoji">🌸</span>
+                <span>Floral</span>
+            </div>
+            <span class="tag-count">15 coincidencias</span>
+        </div>
+    </div>
+
+    <h2>Split Option A: Colored Background Split</h2>
+    <p class="note">Left section with colored background, right section white - strong visual separation</p>
+    <div class="tags-row">
+        <div class="tag-split-a">
+            <div class="tag-icon-side bg-red">
+                <span class="tag-emoji">🍒</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Frutas rojas</span>
+                <span class="tag-count">45 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a">
+            <div class="tag-icon-side bg-yellow">
+                <span class="tag-emoji">🍋</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Cítricos</span>
+                <span class="tag-count">32 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a">
+            <div class="tag-icon-side bg-orange">
+                <span class="tag-emoji">🪵</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Roble</span>
+                <span class="tag-count">28 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a">
+            <div class="tag-icon-side bg-red">
+                <span class="tag-emoji">🌶️</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Especias</span>
+                <span class="tag-count">19 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a">
+            <div class="tag-icon-side bg-purple">
+                <span class="tag-emoji">🌸</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Floral</span>
+                <span class="tag-count">15 coincidencias</span>
+            </div>
+        </div>
+    </div>
+
+    <h2>Split Option B: Divider Line</h2>
+    <p class="note">Clean white background with subtle vertical divider line</p>
+    <div class="tags-row">
+        <div class="tag-split-b">
+            <div class="tag-icon-side">
+                <span class="tag-emoji">🍒</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Frutas rojas</span>
+                <span class="tag-count">45 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-b">
+            <div class="tag-icon-side">
+                <span class="tag-emoji">🍋</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Cítricos</span>
+                <span class="tag-count">32 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-b">
+            <div class="tag-icon-side">
+                <span class="tag-emoji">🪵</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Roble</span>
+                <span class="tag-count">28 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-b">
+            <div class="tag-icon-side">
+                <span class="tag-emoji">🌶️</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Especias</span>
+                <span class="tag-count">19 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-b">
+            <div class="tag-icon-side">
+                <span class="tag-emoji">🌸</span>
+            </div>
+            <div class="tag-text-side">
+                <span class="tag-label">Floral</span>
+                <span class="tag-count">15 coincidencias</span>
+            </div>
+        </div>
+    </div>
+
+    <h2>Split Option A2: Light Tint Background</h2>
+    <p class="note">Dark left + light tinted right side (soft, harmonious)</p>
+    <div class="tags-row">
+        <div class="tag-split-a2">
+            <div class="tag-icon-side bg-red">
+                <span class="tag-emoji">🍒</span>
+            </div>
+            <div class="tag-text-side tint-red">
+                <span class="tag-label">Frutas rojas</span>
+                <span class="tag-count">45 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a2">
+            <div class="tag-icon-side bg-yellow">
+                <span class="tag-emoji">🍋</span>
+            </div>
+            <div class="tag-text-side tint-yellow">
+                <span class="tag-label">Cítricos</span>
+                <span class="tag-count">32 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a2">
+            <div class="tag-icon-side bg-orange">
+                <span class="tag-emoji">🪵</span>
+            </div>
+            <div class="tag-text-side tint-orange">
+                <span class="tag-label">Roble</span>
+                <span class="tag-count">28 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a2">
+            <div class="tag-icon-side bg-red">
+                <span class="tag-emoji">🌶️</span>
+            </div>
+            <div class="tag-text-side tint-red">
+                <span class="tag-label">Especias</span>
+                <span class="tag-count">19 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a2">
+            <div class="tag-icon-side bg-purple">
+                <span class="tag-emoji">🌸</span>
+            </div>
+            <div class="tag-text-side tint-purple">
+                <span class="tag-label">Floral</span>
+                <span class="tag-count">15 coincidencias</span>
+            </div>
+        </div>
+    </div>
+
+    <h2>Split Option A3: Light Tint + Watermark</h2>
+    <p class="note">Same as A2 but with subtle emoji watermark in text area</p>
+    <div class="tags-row">
+        <div class="tag-split-a3">
+            <div class="tag-icon-side bg-red">
+                <span class="tag-emoji">🍒</span>
+            </div>
+            <div class="tag-text-side tint-red">
+                <span class="watermark">🍒</span>
+                <span class="tag-label">Frutas rojas</span>
+                <span class="tag-count">45 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a3">
+            <div class="tag-icon-side bg-yellow">
+                <span class="tag-emoji">🍋</span>
+            </div>
+            <div class="tag-text-side tint-yellow">
+                <span class="watermark">🍋</span>
+                <span class="tag-label">Cítricos</span>
+                <span class="tag-count">32 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a3">
+            <div class="tag-icon-side bg-orange">
+                <span class="tag-emoji">🪵</span>
+            </div>
+            <div class="tag-text-side tint-orange">
+                <span class="watermark">🪵</span>
+                <span class="tag-label">Roble</span>
+                <span class="tag-count">28 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a3">
+            <div class="tag-icon-side bg-red">
+                <span class="tag-emoji">🌶️</span>
+            </div>
+            <div class="tag-text-side tint-red">
+                <span class="watermark">🌶️</span>
+                <span class="tag-label">Especias</span>
+                <span class="tag-count">19 coincidencias</span>
+            </div>
+        </div>
+        <div class="tag-split-a3">
+            <div class="tag-icon-side bg-purple">
+                <span class="tag-emoji">🌸</span>
+            </div>
+            <div class="tag-text-side tint-purple">
+                <span class="watermark">🌸</span>
+                <span class="tag-label">Floral</span>
+                <span class="tag-count">15 coincidencias</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FINAL SELECTION - Two Favorite Variants
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <div style="margin-top: 48px; padding: 24px; background: white; border-radius: 12px;">
+        <h2 style="margin-top: 0;">🏆 Final Selection</h2>
+        <p class="note" style="margin-bottom: 24px;">The two chosen variants - ready for implementation</p>
+
+        <h3 style="color: #722F37; margin-bottom: 12px;">Variant 1: Light Tint Emoji (Main-B)</h3>
+        <p class="note">Softer, lighter emoji using brightness + sepia filters on colored background</p>
+        <div class="tags-row" style="margin-bottom: 24px;">
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-red"><span class="tag-emoji">🍒</span></div>
+                <div class="tag-text-side tint-red"><span class="tag-label">Frutas rojas</span><span class="tag-count">45 coincidencias</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-yellow"><span class="tag-emoji">🍋</span></div>
+                <div class="tag-text-side tint-yellow"><span class="tag-label">Cítricos</span><span class="tag-count">32 coincidencias</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-orange"><span class="tag-emoji">🪵</span></div>
+                <div class="tag-text-side tint-orange"><span class="tag-label">Roble</span><span class="tag-count">28 coincidencias</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-red"><span class="tag-emoji">🌶️</span></div>
+                <div class="tag-text-side tint-red"><span class="tag-label">Especias</span><span class="tag-count">19 coincidencias</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-purple"><span class="tag-emoji">🌸</span></div>
+                <div class="tag-text-side tint-purple"><span class="tag-label">Floral</span><span class="tag-count">15 coincidencias</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-green"><span class="tag-emoji">🌿</span></div>
+                <div class="tag-text-side tint-green"><span class="tag-label">Herbal</span><span class="tag-count">18 coincidencias</span></div>
+            </div>
+        </div>
+
+        <h3 style="color: #722F37; margin-bottom: 12px;">Variant 2: SVG Duotone Filter (Duotone-2)</h3>
+        <p class="note">SVG feColorMatrix maps emoji darks to wine-red, lights to white</p>
+        <div class="tags-row" style="margin-bottom: 24px;">
+            <div class="tag-duo2">
+                <div class="tag-icon-side"><span class="tag-emoji">🍒</span></div>
+                <div class="tag-text-side tint-red"><span class="tag-label">Frutas rojas</span><span class="tag-count">45 coincidencias</span></div>
+            </div>
+            <div class="tag-duo2">
+                <div class="tag-icon-side"><span class="tag-emoji">🍋</span></div>
+                <div class="tag-text-side tint-yellow"><span class="tag-label">Cítricos</span><span class="tag-count">32 coincidencias</span></div>
+            </div>
+            <div class="tag-duo2">
+                <div class="tag-icon-side"><span class="tag-emoji">🪵</span></div>
+                <div class="tag-text-side tint-orange"><span class="tag-label">Roble</span><span class="tag-count">28 coincidencias</span></div>
+            </div>
+            <div class="tag-duo2">
+                <div class="tag-icon-side"><span class="tag-emoji">🌶️</span></div>
+                <div class="tag-text-side tint-red"><span class="tag-label">Especias</span><span class="tag-count">19 coincidencias</span></div>
+            </div>
+            <div class="tag-duo2">
+                <div class="tag-icon-side"><span class="tag-emoji">🌸</span></div>
+                <div class="tag-text-side tint-purple"><span class="tag-label">Floral</span><span class="tag-count">15 coincidencias</span></div>
+            </div>
+            <div class="tag-duo2">
+                <div class="tag-icon-side"><span class="tag-emoji">🌿</span></div>
+                <div class="tag-text-side tint-green"><span class="tag-label">Herbal</span><span class="tag-count">18 coincidencias</span></div>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 12px;">Side-by-Side Comparison</h3>
+        <p class="note">Same cherry, different treatment</p>
+        <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-top: 16px;">
+            <div style="min-width: 150px;">
+                <span style="font-size: 11px; font-weight: 600; color: #722F37; display: block; margin-bottom: 8px;">Light Tint (Main-B)</span>
+                <div class="tag-main-b">
+                    <div class="tag-icon-side bg-red"><span class="tag-emoji">🍒</span></div>
+                    <div class="tag-text-side tint-red"><span class="tag-label">Frutas rojas</span><span class="tag-count">45</span></div>
+                </div>
+            </div>
+            <div style="min-width: 150px;">
+                <span style="font-size: 11px; font-weight: 600; color: #722F37; display: block; margin-bottom: 8px;">SVG Duotone</span>
+                <div class="tag-duo2">
+                    <div class="tag-icon-side"><span class="tag-emoji">🍒</span></div>
+                    <div class="tag-text-side tint-red"><span class="tag-label">Frutas rojas</span><span class="tag-count">45</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nariz vs Boca Example with Final Variants -->
+    <div style="margin-top: 24px; padding: 20px; background: white; border-radius: 12px;">
+        <h2 style="margin-top: 0;">Nariz vs Boca - Final Variant</h2>
+        
+        <div style="margin-bottom: 16px;">
+            <span style="font-size: 12px; font-weight: 600; color: #722F37;">AROMA (NARIZ)</span>
+        </div>
+        <div class="tags-row" style="margin-bottom: 24px;">
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-red"><span class="tag-emoji">🍒</span></div>
+                <div class="tag-text-side tint-red"><span class="tag-label">Frutas rojas</span><span class="tag-count">45</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-purple"><span class="tag-emoji">🌸</span></div>
+                <div class="tag-text-side tint-purple"><span class="tag-label">Floral</span><span class="tag-count">32</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-green"><span class="tag-emoji">🌿</span></div>
+                <div class="tag-text-side tint-green"><span class="tag-label">Herbal</span><span class="tag-count">18</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-yellow"><span class="tag-emoji">🍋</span></div>
+                <div class="tag-text-side tint-yellow"><span class="tag-label">Cítricos</span><span class="tag-count">12</span></div>
+            </div>
+        </div>
+
+        <div style="margin: 24px 0 16px;">
+            <span style="font-size: 12px; font-weight: 600; color: #722F37;">SABOR (BOCA)</span>
+        </div>
+        <div class="tags-row">
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-orange"><span class="tag-emoji">🪵</span></div>
+                <div class="tag-text-side tint-orange"><span class="tag-label">Roble</span><span class="tag-count">38</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-red"><span class="tag-emoji">🌶️</span></div>
+                <div class="tag-text-side tint-red"><span class="tag-label">Especias</span><span class="tag-count">28</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-orange"><span class="tag-emoji">🍶</span></div>
+                <div class="tag-text-side tint-orange"><span class="tag-label">Tostado</span><span class="tag-count">22</span></div>
+            </div>
+            <div class="tag-main-b">
+                <div class="tag-icon-side bg-red"><span class="tag-emoji">🍫</span></div>
+                <div class="tag-text-side tint-red"><span class="tag-label">Chocolate</span><span class="tag-count">15</span></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

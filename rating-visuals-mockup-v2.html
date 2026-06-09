@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinora Rating Visuals - V2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F5F1EB;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: #1A1A2E;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #8B7B6B;
+            margin-bottom: 32px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E8E4DD;
+        }
+
+        .option-row {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #F5F1EB;
+        }
+
+        .option-row:last-child {
+            border-bottom: none;
+        }
+
+        .option-label {
+            width: 120px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #8B7B6B;
+            flex-shrink: 0;
+        }
+
+        .option-demo {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex: 1;
+        }
+
+        .demo-card {
+            background: #FAF8F5;
+            border-radius: 8px;
+            padding: 12px 16px;
+            min-width: 140px;
+        }
+
+        .demo-card-label {
+            font-size: 10px;
+            color: #A69A8E;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        /* ───────────────────────────────────── */
+        /* RATING WITH NUMBER INSIDE RING         */
+        /* ───────────────────────────────────── */
+
+        .ring-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .ring-svg {
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: #E8E4DD;
+        }
+
+        .ring-fill {
+            fill: none;
+            stroke: #722F37;
+            stroke-linecap: round;
+        }
+
+        .ring-number {
+            position: absolute;
+            font-weight: 600;
+            color: #722F37;
+        }
+
+        /* Pro variant - darker color */
+        .ring-pro .ring-fill {
+            stroke: #1A1A2E;
+        }
+
+        .ring-pro .ring-number {
+            color: #1A1A2E;
+        }
+
+        /* Variant sizes */
+        .ring-sm { width: 36px; height: 36px; }
+        .ring-sm .ring-number { font-size: 12px; }
+
+        .ring-md { width: 44px; height: 44px; }
+        .ring-md .ring-number { font-size: 15px; }
+
+        .ring-lg { width: 52px; height: 52px; }
+        .ring-lg .ring-number { font-size: 18px; }
+
+        /* ───────────────────────────────────── */
+        /* RING VARIANTS                          */
+        /* ───────────────────────────────────── */
+
+        /* H1: Thin Ring */
+        .ring-thin .ring-bg,
+        .ring-thin .ring-fill {
+            stroke-width: 2;
+        }
+
+        /* H2: Bold Ring */
+        .ring-bold .ring-bg,
+        .ring-bold .ring-fill {
+            stroke-width: 4;
+        }
+
+        /* H3: Extra Bold Ring */
+        .ring-xbold .ring-bg,
+        .ring-xbold .ring-fill {
+            stroke-width: 6;
+        }
+
+        /* H4: Dashed Ring (unique style) */
+        .ring-dashed .ring-bg {
+            stroke-width: 3;
+            stroke-dasharray: 4 4;
+        }
+        .ring-dashed .ring-fill {
+            stroke-width: 3;
+            stroke: #722F37;
+        }
+
+        /* H5: Two-Tone Ring */
+        .ring-twotone .ring-bg {
+            stroke-width: 4;
+        }
+        .ring-twotone .ring-fill {
+            stroke-width: 4;
+            stroke: url(#wineGradient);
+        }
+
+        /* ───────────────────────────────────── */
+        /* PILL/DOT VARIANTS                      */
+        /* ───────────────────────────────────── */
+
+        .pill-container {
+            display: flex;
+            gap: 4px;
+        }
+
+        .pill {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #E8E4DD;
+        }
+
+        .pill.filled {
+            background: #722F37;
+        }
+
+        .pill.half {
+            background: conic-gradient(#722F37 180deg, #E8E4DD 180deg);
+        }
+
+        .pro-dot .pill.filled {
+            background: #1A1A2E;
+        }
+
+        /* Rectangular pills */
+        .pill-rect {
+            width: 12px;
+            height: 6px;
+            border-radius: 2px;
+            background: #E8E4DD;
+        }
+
+        .pill-rect.filled {
+            background: #722F37;
+        }
+
+        .pill-rect.half {
+            background: linear-gradient(to right, #722F37 50%, #E8E4DD 50%);
+        }
+
+        /* ───────────────────────────────────── */
+        /* DETAIL VIEW STYLES                     */
+        /* ───────────────────────────────────── */
+
+        .detail-demo {
+            background: #FAF8F5;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-left,
+        .detail-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .detail-divider {
+            width: 1px;
+            height: 80px;
+            background: #E8E4DD;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #8B7B6B;
+            margin-top: 8px;
+        }
+
+        .pro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: #1A1A2E;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ───────────────────────────────────── */
+        /* CARD VIEW STYLES                       */
+        /* ───────────────────────────────────── */
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .wine-card {
+            background: white;
+            border-radius: 10px;
+            padding: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .wine-name {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .wine-meta {
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-bottom: 10px;
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rating-number {
+            font-weight: 600;
+            color: #722F37;
+        }
+
+        .pro-badge-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 6px;
+            background: #1A1A2E;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 0.3px;
+        }
+
+        /* Comparison section */
+        .comparison-section {
+            background: linear-gradient(135deg, #FAF8F5 0%, #F5F1EB 100%);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .comparison-row {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(114, 47, 55, 0.1);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-label {
+            width: 80px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #8B7B6B;
+        }
+
+        .comparison-visuals {
+            display: flex;
+            gap: 32px;
+            flex: 1;
+        }
+
+        .rating-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .rating-group-label {
+            font-size: 10px;
+            color: #A69A8E;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        /* Large display for hero */
+        .hero-ring {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-ring-md { width: 80px; height: 80px; }
+        .hero-ring-md .hero-number { font-size: 28px; }
+
+        .hero-ring-sm { width: 64px; height: 64px; }
+        .hero-ring-sm .hero-number { font-size: 22px; }
+    </style>
+</head>
+<body>
+    <!-- SVG Definitions for gradients -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <linearGradient id="wineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#722F37"/>
+                <stop offset="100%" style="stop-color:#4A1F24"/>
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <h1>🍷 Vinora Rating Visuals V2</h1>
+    <p class="subtitle">Number inside ring • Consistent community/pro treatment</p>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         RING VARIANTS (Number Inside)
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Ring Variants (Number Inside)</div>
+
+        <!-- H1: Thin Ring -->
+        <div class="option-row">
+            <div class="option-label">H1: Thin Ring</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Community</div>
+                    <div class="ring-container ring-sm ring-thin">
+                        <svg class="ring-svg" width="36" height="36">
+                            <circle class="ring-bg" cx="18" cy="18" r="14"/>
+                            <circle class="ring-fill" cx="18" cy="18" r="14"
+                                stroke-dasharray="88"
+                                stroke-dashoffset="12.3"/>
+                        </svg>
+                        <span class="ring-number">4.3</span>
+                    </div>
+                    <div class="detail-label">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">PRO</div>
+                    <div class="ring-container ring-sm ring-thin ring-pro">
+                        <svg class="ring-svg" width="36" height="36">
+                            <circle class="ring-bg" cx="18" cy="18" r="14"/>
+                            <circle class="ring-fill" cx="18" cy="18" r="14"
+                                stroke-dasharray="88"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number">4.6</span>
+                    </div>
+                    <div class="detail-label">12 expertos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- H2: Bold Ring -->
+        <div class="option-row">
+            <div class="option-label">H2: Bold Ring</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Community</div>
+                    <div class="ring-container ring-md ring-bold">
+                        <svg class="ring-svg" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="18"/>
+                            <circle class="ring-fill" cx="22" cy="22" r="18"
+                                stroke-dasharray="113"
+                                stroke-dashoffset="15.8"/>
+                        </svg>
+                        <span class="ring-number">4.3</span>
+                    </div>
+                    <div class="detail-label">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">PRO</div>
+                    <div class="ring-container ring-md ring-bold ring-pro">
+                        <svg class="ring-svg" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="18"/>
+                            <circle class="ring-fill" cx="22" cy="22" r="18"
+                                stroke-dasharray="113"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number">4.6</span>
+                    </div>
+                    <div class="detail-label">12 expertos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- H3: Extra Bold Ring -->
+        <div class="option-row">
+            <div class="option-label">H3: Extra Bold</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Community</div>
+                    <div class="ring-container ring-md ring-xbold">
+                        <svg class="ring-svg" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="16"/>
+                            <circle class="ring-fill" cx="22" cy="22" r="16"
+                                stroke-dasharray="100.5"
+                                stroke-dashoffset="14.1"/>
+                        </svg>
+                        <span class="ring-number">4.3</span>
+                    </div>
+                    <div class="detail-label">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">PRO</div>
+                    <div class="ring-container ring-md ring-xbold ring-pro">
+                        <svg class="ring-svg" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="16"/>
+                            <circle class="ring-fill" cx="22" cy="22" r="16"
+                                stroke-dasharray="100.5"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number">4.6</span>
+                    </div>
+                    <div class="detail-label">12 expertos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- H4: Dashed Ring -->
+        <div class="option-row">
+            <div class="option-label">H4: Dashed</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Community</div>
+                    <div class="ring-container ring-md ring-dashed">
+                        <svg class="ring-svg" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="18"/>
+                            <circle class="ring-fill" cx="22" cy="22" r="18"
+                                stroke-dasharray="113"
+                                stroke-dashoffset="15.8"/>
+                        </svg>
+                        <span class="ring-number">4.3</span>
+                    </div>
+                    <div class="detail-label">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">PRO</div>
+                    <div class="ring-container ring-md ring-dashed ring-pro">
+                        <svg class="ring-svg" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="18"/>
+                            <circle class="ring-fill" cx="22" cy="22" r="18"
+                                stroke-dasharray="113"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number">4.6</span>
+                    </div>
+                    <div class="detail-label">12 expertos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- H5: Two-Tone Ring -->
+        <div class="option-row">
+            <div class="option-label">H5: Gradient</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Community</div>
+                    <div class="ring-container ring-md ring-bold ring-twotone">
+                        <svg class="ring-svg" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="18"/>
+                            <circle class="ring-fill" cx="22" cy="22" r="18"
+                                stroke-dasharray="113"
+                                stroke-dashoffset="15.8"/>
+                        </svg>
+                        <span class="ring-number">4.3</span>
+                    </div>
+                    <div class="detail-label">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">PRO</div>
+                    <div class="ring-container ring-md ring-bold ring-pro">
+                        <svg class="ring-svg" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="18"/>
+                            <circle class="ring-fill" cx="22" cy="22" r="18"
+                                stroke-dasharray="113"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number">4.6</span>
+                    </div>
+                    <div class="detail-label">12 expertos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PILL/DOT VARIANTS
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Pill/Dot Variants</div>
+
+        <!-- F1: Round Dots -->
+        <div class="option-row">
+            <div class="option-label">F1: Round Dots</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Card View</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">4.3</span>
+                        <div class="pill-container">
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill half"></div>
+                        </div>
+                    </div>
+                    <div class="detail-label">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">PRO</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="pro-badge-inline">PRO</span>
+                        <span class="rating-number">4.6</span>
+                        <div class="pill-container pro-dot">
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                        </div>
+                    </div>
+                    <div class="detail-label">12 expertos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- F2: Rectangular Pills -->
+        <div class="option-row">
+            <div class="option-label">F2: Rect Pills</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Card View</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">4.3</span>
+                        <div class="pill-container">
+                            <div class="pill-rect filled"></div>
+                            <div class="pill-rect filled"></div>
+                            <div class="pill-rect filled"></div>
+                            <div class="pill-rect filled"></div>
+                            <div class="pill-rect half"></div>
+                        </div>
+                    </div>
+                    <div class="detail-label">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">PRO</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="pro-badge-inline">PRO</span>
+                        <span class="rating-number">4.6</span>
+                        <div class="pill-container">
+                            <div class="pill-rect filled" style="background: #1A1A2E;"></div>
+                            <div class="pill-rect filled" style="background: #1A1A2E;"></div>
+                            <div class="pill-rect filled" style="background: #1A1A2E;"></div>
+                            <div class="pill-rect filled" style="background: #1A1A2E;"></div>
+                            <div class="pill-rect filled" style="background: #1A1A2E;"></div>
+                        </div>
+                    </div>
+                    <div class="detail-label">12 expertos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         DETAIL VIEW COMPARISON
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Detail View - Full Comparison</div>
+
+        <div class="comparison-section">
+            <!-- H1: Thin Ring -->
+            <div class="comparison-row">
+                <div class="comparison-label">H1: Thin</div>
+                <div class="comparison-visuals">
+                    <div class="detail-demo" style="flex: 1; padding: 16px;">
+                        <div class="detail-left">
+                            <div class="ring-container ring-md ring-thin">
+                                <svg class="ring-svg" width="48" height="48">
+                                    <circle class="ring-bg" cx="24" cy="24" r="20"/>
+                                    <circle class="ring-fill" cx="24" cy="24" r="20"
+                                        stroke-dasharray="125.7"
+                                        stroke-dashoffset="17.6"/>
+                                </svg>
+                                <span class="ring-number" style="font-size: 16px;">4.3</span>
+                            </div>
+                            <span class="detail-label">2.4k valoraciones</span>
+                        </div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-right">
+                            <span class="pro-badge">PRO</span>
+                            <div class="ring-container ring-md ring-thin ring-pro">
+                                <svg class="ring-svg" width="48" height="48">
+                                    <circle class="ring-bg" cx="24" cy="24" r="20"/>
+                                    <circle class="ring-fill" cx="24" cy="24" r="20"
+                                        stroke-dasharray="125.7"
+                                        stroke-dashoffset="0"/>
+                                </svg>
+                                <span class="ring-number" style="font-size: 16px;">4.6</span>
+                            </div>
+                            <span class="detail-label">12 expertos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- H2: Bold Ring -->
+            <div class="comparison-row">
+                <div class="comparison-label">H2: Bold</div>
+                <div class="comparison-visuals">
+                    <div class="detail-demo" style="flex: 1; padding: 16px;">
+                        <div class="detail-left">
+                            <div class="ring-container ring-lg ring-bold">
+                                <svg class="ring-svg" width="52" height="52">
+                                    <circle class="ring-bg" cx="26" cy="26" r="22"/>
+                                    <circle class="ring-fill" cx="26" cy="26" r="22"
+                                        stroke-dasharray="138.2"
+                                        stroke-dashoffset="19.3"/>
+                                </svg>
+                                <span class="ring-number" style="font-size: 18px;">4.3</span>
+                            </div>
+                            <span class="detail-label">2.4k valoraciones</span>
+                        </div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-right">
+                            <span class="pro-badge">PRO</span>
+                            <div class="ring-container ring-lg ring-bold ring-pro">
+                                <svg class="ring-svg" width="52" height="52">
+                                    <circle class="ring-bg" cx="26" cy="26" r="22"/>
+                                    <circle class="ring-fill" cx="26" cy="26" r="22"
+                                        stroke-dasharray="138.2"
+                                        stroke-dashoffset="0"/>
+                                </svg>
+                                <span class="ring-number" style="font-size: 18px;">4.6</span>
+                            </div>
+                            <span class="detail-label">12 expertos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- F1: Round Dots -->
+            <div class="comparison-row">
+                <div class="comparison-label">F1: Dots</div>
+                <div class="comparison-visuals">
+                    <div class="detail-demo" style="flex: 1; padding: 16px;">
+                        <div class="detail-left">
+                            <span class="rating-number" style="font-size: 32px;">4.3</span>
+                            <div class="pill-container" style="margin-top: 8px;">
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                                <div class="pill half" style="width: 10px; height: 10px;"></div>
+                            </div>
+                            <span class="detail-label">2.4k valoraciones</span>
+                        </div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-right">
+                            <span class="pro-badge">PRO</span>
+                            <span class="rating-number" style="font-size: 32px;">4.6</span>
+                            <div class="pill-container pro-dot" style="margin-top: 8px;">
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                                <div class="pill filled" style="width: 10px; height: 10px;"></div>
+                            </div>
+                            <span class="detail-label">12 expertos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CARD VIEW COMPARISON
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Card View Comparison</div>
+
+        <div class="card-grid">
+            <!-- H1: Thin Ring -->
+            <div class="wine-card">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-meta">Rioja DOCa · 2019</div>
+                <div class="card-rating">
+                    <div class="ring-container ring-sm ring-thin">
+                        <svg class="ring-svg" width="32" height="32">
+                            <circle class="ring-bg" cx="16" cy="16" r="13"/>
+                            <circle class="ring-fill" cx="16" cy="16" r="13"
+                                stroke-dasharray="81.7"
+                                stroke-dashoffset="11.4"/>
+                        </svg>
+                        <span class="ring-number" style="font-size: 11px;">4.3</span>
+                    </div>
+                    <span class="pro-badge-inline">PRO</span>
+                    <div class="ring-container ring-sm ring-thin ring-pro">
+                        <svg class="ring-svg" width="32" height="32">
+                            <circle class="ring-bg" cx="16" cy="16" r="13"/>
+                            <circle class="ring-fill" cx="16" cy="16" r="13"
+                                stroke-dasharray="81.7"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number" style="font-size: 11px;">4.6</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- H2: Bold Ring -->
+            <div class="wine-card">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-meta">Rioja DOCa · 2019</div>
+                <div class="card-rating">
+                    <div class="ring-container ring-sm ring-bold">
+                        <svg class="ring-svg" width="34" height="34">
+                            <circle class="ring-bg" cx="17" cy="17" r="14"/>
+                            <circle class="ring-fill" cx="17" cy="17" r="14"
+                                stroke-dasharray="88"
+                                stroke-dashoffset="12.3"/>
+                        </svg>
+                        <span class="ring-number" style="font-size: 12px;">4.3</span>
+                    </div>
+                    <span class="pro-badge-inline">PRO</span>
+                    <div class="ring-container ring-sm ring-bold ring-pro">
+                        <svg class="ring-svg" width="34" height="34">
+                            <circle class="ring-bg" cx="17" cy="17" r="14"/>
+                            <circle class="ring-fill" cx="17" cy="17" r="14"
+                                stroke-dasharray="88"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number" style="font-size: 12px;">4.6</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- F1: Round Dots -->
+            <div class="wine-card">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-meta">Rioja DOCa · 2019</div>
+                <div class="card-rating">
+                    <span class="rating-number">4.3</span>
+                    <div class="pill-container">
+                        <div class="pill filled"></div>
+                        <div class="pill filled"></div>
+                        <div class="pill filled"></div>
+                        <div class="pill filled"></div>
+                        <div class="pill half"></div>
+                    </div>
+                    <span class="pro-badge-inline">PRO 4.6</span>
+                </div>
+            </div>
+
+            <!-- H3: Extra Bold -->
+            <div class="wine-card">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-meta">Rioja DOCa · 2019</div>
+                <div class="card-rating">
+                    <div class="ring-container ring-sm ring-xbold">
+                        <svg class="ring-svg" width="36" height="36">
+                            <circle class="ring-bg" cx="18" cy="18" r="14"/>
+                            <circle class="ring-fill" cx="18" cy="18" r="14"
+                                stroke-dasharray="88"
+                                stroke-dashoffset="12.3"/>
+                        </svg>
+                        <span class="ring-number" style="font-size: 11px;">4.3</span>
+                    </div>
+                    <span class="pro-badge-inline">PRO</span>
+                    <div class="ring-container ring-sm ring-xbold ring-pro">
+                        <svg class="ring-svg" width="36" height="36">
+                            <circle class="ring-bg" cx="18" cy="18" r="14"/>
+                            <circle class="ring-fill" cx="18" cy="18" r="14"
+                                stroke-dasharray="88"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number" style="font-size: 11px;">4.6</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- F2: Rect Pills -->
+            <div class="wine-card">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-meta">Rioja DOCa · 2019</div>
+                <div class="card-rating">
+                    <span class="rating-number">4.3</span>
+                    <div class="pill-container">
+                        <div class="pill-rect filled"></div>
+                        <div class="pill-rect filled"></div>
+                        <div class="pill-rect filled"></div>
+                        <div class="pill-rect filled"></div>
+                        <div class="pill-rect half"></div>
+                    </div>
+                    <span class="pro-badge-inline">PRO 4.6</span>
+                </div>
+            </div>
+
+            <!-- H4: Dashed -->
+            <div class="wine-card">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-meta">Rioja DOCa · 2019</div>
+                <div class="card-rating">
+                    <div class="ring-container ring-sm ring-dashed">
+                        <svg class="ring-svg" width="34" height="34">
+                            <circle class="ring-bg" cx="17" cy="17" r="14"/>
+                            <circle class="ring-fill" cx="17" cy="17" r="14"
+                                stroke-dasharray="88"
+                                stroke-dashoffset="12.3"/>
+                        </svg>
+                        <span class="ring-number" style="font-size: 11px;">4.3</span>
+                    </div>
+                    <span class="pro-badge-inline">PRO</span>
+                    <div class="ring-container ring-sm ring-dashed ring-pro">
+                        <svg class="ring-svg" width="34" height="34">
+                            <circle class="ring-bg" cx="17" cy="17" r="14"/>
+                            <circle class="ring-fill" cx="17" cy="17" r="14"
+                                stroke-dasharray="88"
+                                stroke-dashoffset="0"/>
+                        </svg>
+                        <span class="ring-number" style="font-size: 11px;">4.6</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

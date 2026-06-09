@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinora Rating Visuals - Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F5F1EB;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: #1A1A2E;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #8B7B6B;
+            margin-bottom: 32px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E8E4DD;
+        }
+
+        .option-row {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #F5F1EB;
+        }
+
+        .option-row:last-child {
+            border-bottom: none;
+        }
+
+        .option-label {
+            width: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #8B7B6B;
+            flex-shrink: 0;
+        }
+
+        .option-demo {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex: 1;
+        }
+
+        .demo-card {
+            background: #FAF8F5;
+            border-radius: 8px;
+            padding: 12px 16px;
+            min-width: 140px;
+        }
+
+        .demo-card-label {
+            font-size: 10px;
+            color: #A69A8E;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .rating-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #722F37;
+        }
+
+        .rating-count {
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-top: 2px;
+        }
+
+        /* ───────────────────────────────────── */
+        /* OPTION F: PILL/BAR SYSTEM              */
+        /* ───────────────────────────────────── */
+
+        /* F1: Solid Pills */
+        .pill-container {
+            display: flex;
+            gap: 4px;
+        }
+
+        .pill {
+            width: 20px;
+            height: 8px;
+            border-radius: 2px;
+            background: #E8E4DD;
+        }
+
+        .pill.filled {
+            background: #722F37;
+        }
+
+        .pill.half {
+            background: linear-gradient(to right, #722F37 50%, #E8E4DD 50%);
+        }
+
+        /* F2: Rounded Bars */
+        .bar-container {
+            display: flex;
+            gap: 3px;
+        }
+
+        .bar {
+            width: 18px;
+            height: 4px;
+            border-radius: 2px;
+            background: #E8E4DD;
+        }
+
+        .bar.filled {
+            background: #722F37;
+        }
+
+        .bar.half {
+            background: linear-gradient(to right, #722F37 50%, #E8E4DD 50%);
+        }
+
+        /* F3: Progress Style */
+        .progress-bar {
+            width: 100px;
+            height: 6px;
+            background: #E8E4DD;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #722F37;
+            border-radius: 3px;
+        }
+
+        /* F4: Slider Style */
+        .slider-track {
+            width: 100px;
+            height: 4px;
+            background: #E8E4DD;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .slider-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #722F37;
+            border-radius: 2px;
+        }
+
+        .slider-thumb {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            border: 2px solid #722F37;
+            border-radius: 50%;
+        }
+
+        /* ───────────────────────────────────── */
+        /* OPTION G: NUMBER + RING SYSTEM         */
+        /* ───────────────────────────────────── */
+
+        .ring-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .ring-svg {
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: #E8E4DD;
+        }
+
+        .ring-fill {
+            fill: none;
+            stroke: #722F37;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        .ring-number {
+            position: absolute;
+            font-size: 14px;
+            font-weight: 600;
+            color: #722F37;
+        }
+
+        /* G1: Thin ring, subtle */
+        .ring-thin .ring-bg,
+        .ring-thin .ring-fill {
+            stroke-width: 2;
+        }
+
+        .ring-thin .ring-fill {
+            stroke-opacity: 0.6;
+        }
+
+        /* G2: Bold ring, wine-colored */
+        .ring-bold .ring-bg,
+        .ring-bold .ring-fill {
+            stroke-width: 4;
+        }
+
+        .ring-bold .ring-fill {
+            stroke: #722F37;
+        }
+
+        /* G3: Ring only, number outside */
+        .ring-only-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ring-only .ring-number {
+            position: static;
+            font-size: 16px;
+        }
+
+        /* G4: Multiple rings (community + pro) */
+        .double-ring-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .double-ring-outer {
+            width: 56px;
+            height: 56px;
+        }
+
+        .double-ring-inner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+        }
+
+        .double-ring-number {
+            position: absolute;
+            font-size: 16px;
+            font-weight: 600;
+            color: #722F37;
+        }
+
+        .pro-badge-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            background: #1A1A2E;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+            margin-left: 8px;
+        }
+
+        /* Detail view mockup */
+        .detail-demo {
+            background: #FAF8F5;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .detail-left,
+        .detail-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .detail-divider {
+            width: 1px;
+            height: 60px;
+            background: #E8E4DD;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-top: 4px;
+        }
+
+        .pro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: #1A1A2E;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        /* Side by side comparison */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .comparison-item {
+            background: #FAF8F5;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .comparison-title {
+            font-size: 11px;
+            color: #A69A8E;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍷 Vinora Rating Visuals</h1>
+    <p class="subtitle">Exploring pill/bar and ring-based rating systems</p>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OPTION F: PILL/BAR SYSTEM
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Option F: Pill/Bar System</div>
+
+        <div class="option-row">
+            <div class="option-label">F1: Solid Pills</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Card View</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">4.3</span>
+                        <div class="pill-container">
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill half"></div>
+                        </div>
+                    </div>
+                    <div class="rating-count">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">Half State</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">3.5</span>
+                        <div class="pill-container">
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill half"></div>
+                            <div class="pill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-row">
+            <div class="option-label">F2: Rounded Bars</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Card View</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">4.6</span>
+                        <div class="bar-container">
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                        </div>
+                    </div>
+                    <div class="rating-count">12 expertos</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">Clean & Minimal</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">4.0</span>
+                        <div class="bar-container">
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-row">
+            <div class="option-label">F3: Progress Bar</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Single Bar</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">4.3</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 86%;"></div>
+                        </div>
+                    </div>
+                    <div class="rating-count">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">Lower Rating</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">2.8</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 56%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-row">
+            <div class="option-label">F4: Slider Style</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">With Thumb</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">4.3</span>
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 86%;"></div>
+                            <div class="slider-thumb" style="left: 86%;"></div>
+                        </div>
+                    </div>
+                    <div class="rating-count">2.4k valoraciones</div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">Interactive Feel</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="rating-number">3.5</span>
+                        <div class="slider-track">
+                            <div class="slider-fill" style="width: 70%;"></div>
+                            <div class="slider-thumb" style="left: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         OPTION G: NUMBER + RING SYSTEM
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Option G: Number + Ring System</div>
+
+        <div class="option-row">
+            <div class="option-label">G1: Thin Ring</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Subtle & Elegant</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="ring-container ring-thin">
+                            <svg class="ring-svg" width="40" height="40">
+                                <circle class="ring-bg" cx="20" cy="20" r="16"/>
+                                <circle class="ring-fill" cx="20" cy="20" r="16"
+                                    stroke-dasharray="100.5"
+                                    stroke-dashoffset="14.1"/>
+                            </svg>
+                            <span class="ring-number">4.3</span>
+                        </div>
+                        <div>
+                            <div class="rating-number">2.4k</div>
+                            <div class="rating-count">valoraciones</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">Pro Rating</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span class="pro-badge-inline">PRO</span>
+                        <div class="ring-container ring-thin">
+                            <svg class="ring-svg" width="36" height="36">
+                                <circle class="ring-bg" cx="18" cy="18" r="14"/>
+                                <circle class="ring-fill" cx="18" cy="18" r="14"
+                                    stroke-dasharray="88"
+                                    stroke-dashoffset="4.4"/>
+                            </svg>
+                            <span class="ring-number" style="font-size: 12px;">4.6</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-row">
+            <div class="option-label">G2: Bold Ring</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Strong Presence</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="ring-container ring-bold">
+                            <svg class="ring-svg" width="40" height="40">
+                                <circle class="ring-bg" cx="20" cy="20" r="16"/>
+                                <circle class="ring-fill" cx="20" cy="20" r="16"
+                                    stroke-dasharray="100.5"
+                                    stroke-dashoffset="14.1"/>
+                            </svg>
+                            <span class="ring-number">4.3</span>
+                        </div>
+                        <div>
+                            <div class="rating-number">2.4k</div>
+                            <div class="rating-count">valoraciones</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">Wine Colored</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="ring-container ring-bold">
+                            <svg class="ring-svg" width="40" height="40">
+                                <circle class="ring-bg" cx="20" cy="20" r="16"/>
+                                <circle class="ring-fill" cx="20" cy="20" r="16"
+                                    stroke-dasharray="100.5"
+                                    stroke-dashoffset="20.1"/>
+                            </svg>
+                            <span class="ring-number">4.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-row">
+            <div class="option-label">G3: Ring Only</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Number Outside</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span class="rating-number" style="font-size: 20px;">4.3</span>
+                        <div class="ring-container ring-bold">
+                            <svg class="ring-svg" width="44" height="44">
+                                <circle class="ring-bg" cx="22" cy="22" r="18"/>
+                                <circle class="ring-fill" cx="22" cy="22" r="18"
+                                    stroke-dasharray="113"
+                                    stroke-dashoffset="15.8"/>
+                            </svg>
+                        </div>
+                        <span class="rating-count">2.4k</span>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">Compact</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span class="rating-number" style="font-size: 20px;">4.6</span>
+                        <div class="ring-container ring-thin">
+                            <svg class="ring-svg" width="40" height="40">
+                                <circle class="ring-bg" cx="20" cy="20" r="16"/>
+                                <circle class="ring-fill" cx="20" cy="20" r="16"
+                                    stroke-dasharray="100.5"
+                                    stroke-dashoffset="0"/>
+                            </svg>
+                        </div>
+                        <span class="pro-badge-inline">PRO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-row">
+            <div class="option-label">G4: Double Ring</div>
+            <div class="option-demo">
+                <div class="demo-card">
+                    <div class="demo-card-label">Community + Pro</div>
+                    <div class="double-ring-container">
+                        <svg class="ring-svg double-ring-outer">
+                            <circle class="ring-bg" cx="28" cy="28" r="24" stroke-width="3"/>
+                            <circle class="ring-fill" cx="28" cy="28" r="24"
+                                stroke-width="3"
+                                stroke-dasharray="150.8"
+                                stroke-dashoffset="21.1"/>
+                        </svg>
+                        <svg class="ring-svg double-ring-inner">
+                            <circle class="ring-bg" cx="20" cy="20" r="16" stroke-width="2"/>
+                            <circle class="ring-fill" cx="20" cy="20" r="16"
+                                stroke-width="2"
+                                stroke-dasharray="100.5"
+                                stroke-dashoffset="8"/>
+                            <style>.double-ring-inner .ring-fill { stroke: #1A1A2E; }</style>
+                        </svg>
+                        <span class="double-ring-number">4.3</span>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <div class="demo-card-label">Nested Visual</div>
+                    <div style="font-size: 11px; color: #8B7B6B;">
+                        Outer ring = Community (4.3)<br>
+                        Inner ring = Pro (4.6)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         DETAIL VIEW COMPARISON
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Detail View Comparison</div>
+
+        <div class="comparison-grid">
+            <div class="comparison-item">
+                <div class="comparison-title">F2: Bars (Current Style)</div>
+                <div class="detail-demo" style="padding: 12px;">
+                    <div class="detail-left">
+                        <span class="rating-number" style="font-size: 24px;">4.3</span>
+                        <div class="bar-container" style="margin-top: 8px;">
+                            <div class="bar filled" style="width: 14px; height: 5px;"></div>
+                            <div class="bar filled" style="width: 14px; height: 5px;"></div>
+                            <div class="bar filled" style="width: 14px; height: 5px;"></div>
+                            <div class="bar filled" style="width: 14px; height: 5px;"></div>
+                            <div class="bar half" style="width: 14px; height: 5px;"></div>
+                        </div>
+                        <span class="detail-label">2.4k valoraciones</span>
+                    </div>
+                    <div class="detail-divider"></div>
+                    <div class="detail-right">
+                        <span class="pro-badge">PRO</span>
+                        <span class="rating-number" style="font-size: 24px;">4.6</span>
+                        <span class="detail-label">12 expertos</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-item">
+                <div class="comparison-title">G2: Bold Ring</div>
+                <div class="detail-demo" style="padding: 12px;">
+                    <div class="detail-left">
+                        <div class="ring-container ring-bold" style="margin-bottom: 4px;">
+                            <svg class="ring-svg" width="56" height="56">
+                                <circle class="ring-bg" cx="28" cy="28" r="24"/>
+                                <circle class="ring-fill" cx="28" cy="28" r="24"
+                                    stroke-dasharray="150.8"
+                                    stroke-dashoffset="21.1"/>
+                            </svg>
+                            <span class="ring-number" style="font-size: 18px;">4.3</span>
+                        </div>
+                        <span class="detail-label">2.4k valoraciones</span>
+                    </div>
+                    <div class="detail-divider"></div>
+                    <div class="detail-right">
+                        <span class="pro-badge">PRO</span>
+                        <div class="ring-container ring-bold" style="margin: 4px 0;">
+                            <svg class="ring-svg" width="48" height="48">
+                                <circle class="ring-bg" cx="24" cy="24" r="20"/>
+                                <circle class="ring-fill" cx="24" cy="24" r="20"
+                                    stroke-dasharray="125.7"
+                                    stroke-dashoffset="0"/>
+                            </svg>
+                            <span class="ring-number" style="font-size: 14px;">4.6</span>
+                        </div>
+                        <span class="detail-label">12 expertos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         CARD VIEW COMPARISON
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="section">
+        <div class="section-title">Card View Comparison</div>
+
+        <div class="comparison-grid">
+            <div class="comparison-item">
+                <div class="comparison-title">F1: Solid Pills</div>
+                <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">
+                    <div style="font-weight: 500; margin-bottom: 4px;">Ramón Bilbao Crianza</div>
+                    <div style="font-size: 11px; color: #8B7B6B; margin-bottom: 8px;">Rioja DOCa · 2019</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-weight: 600; color: #722F37;">4.3</span>
+                        <div class="pill-container">
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill filled"></div>
+                            <div class="pill half"></div>
+                        </div>
+                        <span class="pro-badge-inline">PRO 4.6</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-item">
+                <div class="comparison-title">G3: Ring Only</div>
+                <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">
+                    <div style="font-weight: 500; margin-bottom: 4px;">Ramón Bilbao Crianza</div>
+                    <div style="font-size: 11px; color: #8B7B6B; margin-bottom: 8px;">Rioja DOCa · 2019</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-weight: 600; color: #722F37; font-size: 18px;">4.3</span>
+                        <div class="ring-container ring-thin">
+                            <svg class="ring-svg" width="28" height="28">
+                                <circle class="ring-bg" cx="14" cy="14" r="11"/>
+                                <circle class="ring-fill" cx="14" cy="14" r="11"
+                                    stroke-dasharray="69.1"
+                                    stroke-dashoffset="9.7"/>
+                            </svg>
+                        </div>
+                        <span class="pro-badge-inline">PRO 4.6</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-item">
+                <div class="comparison-title">F2: Rounded Bars</div>
+                <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">
+                    <div style="font-weight: 500; margin-bottom: 4px;">Ramón Bilbao Crianza</div>
+                    <div style="font-size: 11px; color: #8B7B6B; margin-bottom: 8px;">Rioja DOCa · 2019</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-weight: 600; color: #722F37;">4.3</span>
+                        <div class="bar-container">
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar filled"></div>
+                            <div class="bar half"></div>
+                        </div>
+                        <span class="pro-badge-inline">PRO 4.6</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-item">
+                <div class="comparison-title">G2: Bold Ring</div>
+                <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">
+                    <div style="font-weight: 500; margin-bottom: 4px;">Ramón Bilbao Crianza</div>
+                    <div style="font-size: 11px; color: #8B7B6B; margin-bottom: 8px;">Rioja DOCa · 2019</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-weight: 600; color: #722F37; font-size: 18px;">4.3</span>
+                        <div class="ring-container ring-bold">
+                            <svg class="ring-svg" width="32" height="32">
+                                <circle class="ring-bg" cx="16" cy="16" r="13"/>
+                                <circle class="ring-fill" cx="16" cy="16" r="13"
+                                    stroke-dasharray="81.7"
+                                    stroke-dashoffset="11.4"/>
+                            </svg>
+                            <span class="ring-number" style="font-size: 11px; left: 17px;"></span>
+                        </div>
+                        <span class="pro-badge-inline">PRO 4.6</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

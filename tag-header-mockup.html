@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag Header Layout - Vinora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #F5F1EB;
+            color: #1A1A2E;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #8B7B6B;
+            margin-bottom: 32px;
+        }
+
+        .mockup-section {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E8E4DD;
+        }
+
+        /* Wine Header */
+        .wine-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .wine-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1A1A2E;
+            margin-bottom: 4px;
+        }
+
+        .wine-subtitle {
+            font-size: 13px;
+            color: #8B7B6B;
+        }
+
+        /* Tag Display */
+        .tag-display {
+            text-align: center;
+        }
+
+        .tag-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #722F37;
+            margin-bottom: 12px;
+            text-transform: capitalize;
+        }
+
+        .tag-description {
+            font-size: 14px;
+            color: #6B5D52;
+            line-height: 1.6;
+            padding: 0 16px;
+            margin-bottom: 16px;
+        }
+
+        .subtags-label {
+            font-size: 12px;
+            color: #8B7B6B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtags-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding: 0 16px 16px;
+        }
+
+        .subtag-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 10px;
+            background: #F5E6D6;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #722F37;
+            text-align: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .subtag-chip:hover {
+            background: #E8D6C4;
+        }
+
+        .see-all {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .see-all-btn {
+            font-size: 13px;
+            color: #722F37;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border: 1px solid #E8E4DD;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Divider */
+        .section-divider {
+            height: 1px;
+            background: #E8E4DD;
+            margin: 20px 0;
+        }
+
+        .comments-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .comparison-note {
+            font-size: 13px;
+            color: #6B5D52;
+            padding: 12px;
+            background: #FAF8F5;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        .comparison-note strong {
+            color: #722F37;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏷️ Tag Header Layout</h1>
+        <p class="subtitle">Deciding order: Description vs Subtags</p>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             OPTION A: Tag → Description → Subtags
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="mockup-section">
+            <div class="section-title">Opción A: Descripción primero</div>
+
+            <div class="wine-header">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-subtitle">Reseñas que mencionan frutas negras</div>
+            </div>
+
+            <div class="tag-display">
+                <div class="tag-name">Frutas Negras</div>
+
+                <div class="tag-description">
+                    Notas derivadas de antocianinas presentes en uvas tintas. Aportan structure,
+                    color y notas a frutas del bosque que evolucionan con la crianza.
+                </div>
+
+                <div class="subtags-label">Notas relacionadas (8 de 16)</div>
+                <div class="subtags-grid">
+                    <div class="subtag-chip">Casis</div>
+                    <div class="subtag-chip">Mora</div>
+                    <div class="subtag-chip">Arándano</div>
+                    <div class="subtag-chip">Ciruela</div>
+                    <div class="subtag-chip">Grosella negra</div>
+                    <div class="subtag-chip">Higo</div>
+                    <div class="subtag-chip">Mora ártica</div>
+                    <div class="subtag-chip">Berenjena</div>
+                    <div class="see-all">
+                        <button class="see-all-btn">Ver 8 más →</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Razonamiento:</strong><br>
+                Usuario ve el tag, entiende qué es (educación), luego ve qué notas específicas
+                contiene. Flujo lógico: "¿Qué son las frutas negras?" → "Ah, antocianinas" → "¿Ejemplos?"
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             OPTION B: Tag → Subtags → Description
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="mockup-section">
+            <div class="section-title">Opción B: Subtags primero</div>
+
+            <div class="wine-header">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-subtitle">Reseñas que mencionan frutas negras</div>
+            </div>
+
+            <div class="tag-display">
+                <div class="tag-name">Frutas Negras</div>
+
+                <div class="subtags-label">Notas relacionadas (8 de 16)</div>
+                <div class="subtags-grid">
+                    <div class="subtag-chip">Casis</div>
+                    <div class="subtag-chip">Mora</div>
+                    <div class="subtag-chip">Arándano</div>
+                    <div class="subtag-chip">Ciruela</div>
+                    <div class="subtag-chip">Grosella negra</div>
+                    <div class="subtag-chip">Higo</div>
+                    <div class="subtag-chip">Mora ártica</div>
+                    <div class="subtag-chip">Berenjena</div>
+                    <div class="see-all">
+                        <button class="see-all-btn">Ver 8 más →</button>
+                    </div>
+                </div>
+
+                <div class="tag-description" style="margin-top: 16px;">
+                    Notas derivadas de antocianinas presentes en uvas tintas. Aportan structure,
+                    color y notas a frutas del bosque que evolucionan con la crianza.
+                </div>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Razonamiento:</strong><br>
+                Usuario ve el tag, ve rápidamente los ejemplos concretos, luego puede leer
+                más si le interesa. Más escaneable - los chips visuales captan antes que el texto.
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             FULL SCREEN SIMULATION
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="mockup-section">
+            <div class="section-title">Simulación de pantalla completa (con B)</div>
+
+            <div style="border-top: 1px solid #E8E4DD; padding-top: 12px;">
+                <div class="wine-header">
+                    <div class="wine-name">Ramón Bilbao Crianza</div>
+                    <div class="wine-subtitle">Reseñas que mencionan frutas negras</div>
+                </div>
+
+                <div class="tag-display">
+                    <div class="tag-name">Frutas Negras</div>
+
+                    <div class="subtags-label">Notas relacionadas (8 de 16)</div>
+                    <div class="subtags-grid">
+                        <div class="subtag-chip">Casis</div>
+                        <div class="subtag-chip">Mora</div>
+                        <div class="subtag-chip">Arándano</div>
+                        <div class="subtag-chip">Ciruela</div>
+                        <div class="subtag-chip">Grosella negra</div>
+                        <div class="subtag-chip">Higo</div>
+                        <div class="subtag-chip">Mora ártica</div>
+                        <div class="subtag-chip">Berenjena</div>
+                        <div class="see-all">
+                            <button class="see-all-btn">Ver 8 más →</button>
+                        </div>
+                    </div>
+
+                    <div class="tag-description" style="margin-top: 16px;">
+                        Notas derivadas de antocianinas presentes en uvas tintas. Aportan structure,
+                        color y notas a frutas del bosque que evolucionan con la crianza.
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="comments-header">4 comentarios</div>
+
+                <div style="padding: 12px; background: #FAF8F5; border-radius: 8px; text-align: center; color: #8B7B6B;">
+                    [ Lista de comentarios aparecería aquí ]
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

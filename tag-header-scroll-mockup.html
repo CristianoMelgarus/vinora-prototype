@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag Header - Horizontal Scroll with Hint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #F5F1EB;
+            color: #1A1A2E;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #8B7B6B;
+            margin-bottom: 32px;
+        }
+
+        .mockup-section {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E8E4DD;
+        }
+
+        /* Wine Header */
+        .wine-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .wine-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1A1A2E;
+            margin-bottom: 4px;
+        }
+
+        .wine-subtitle {
+            font-size: 13px;
+            color: #8B7B6B;
+        }
+
+        /* Tag Display */
+        .tag-display {
+            text-align: center;
+        }
+
+        .tag-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #722F37;
+            margin-bottom: 12px;
+            text-transform: capitalize;
+        }
+
+        .tag-description {
+            font-size: 14px;
+            color: #6B5D52;
+            line-height: 1.6;
+            padding: 0 16px;
+            margin-bottom: 16px;
+        }
+
+        .subtags-label {
+            font-size: 12px;
+            color: #8B7B6B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            text-align: left;
+            padding: 0 16px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           HORIZONTAL SCROLL WITH FADE EDGES (same as wine detail)
+           ═══════════════════════════════════════════════════════════ */
+
+        .subtags-container {
+            position: relative;
+            padding: 0 16px 16px;
+        }
+
+        /* Fade edges - same logic as flavor-tags-container in prototype */
+        .subtags-container::before,
+        .subtags-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .subtags-container::before {
+            left: 0;
+            background: linear-gradient(to right, white, transparent);
+        }
+
+        .subtags-container::after {
+            right: 0;
+            background: linear-gradient(to left, white, transparent);
+        }
+
+        /* Show fade edges via JavaScript */
+        .subtags-container.scrolled-start::before {
+            opacity: 1; /* Show left fade when scrolled away from start */
+        }
+
+        .subtags-container.scrolled-end::after {
+            opacity: 1; /* Show right fade when there's more content (NOT at end) */
+        }
+
+        /* Always show right fade initially (more content hint) */
+        .subtags-container:not(.scrolled-end)::after {
+            opacity: 1;
+        }
+
+        .subtags-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 4px 0;
+            /* Hide scrollbar */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .subtags-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .subtag-chip {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            background: #F5E6D6;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #722F37;
+            cursor: pointer;
+            transition: all 0.2s;
+            scroll-snap-align: start;
+        }
+
+        .subtag-count {
+            font-size: 11px;
+            font-weight: 600;
+            color: #A65D66;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Active state for filtered subtag */
+        .subtag-chip.active {
+            background: #722F37;
+            color: white;
+        }
+
+        .subtag-chip.active .subtag-count {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        /* Filter header */
+        .filter-header {
+            display: none; /* Hidden by default, shown when filtering */
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #F5E6D6;
+            border-radius: 8px;
+            margin: 12px 16px;
+        }
+
+        .filter-header.active {
+            display: flex;
+        }
+
+        .filter-header-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: #722F37;
+        }
+
+        .filter-header-text strong {
+            font-weight: 700;
+        }
+
+        .filter-clear-btn {
+            font-size: 12px;
+            color: #722F37;
+            background: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .subtag-chip:hover {
+            background: #E8D6C4;
+            transform: translateY(-1px);
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           COMPARISON OPTIONS
+           ═══════════════════════════════════════════════════════════ */
+
+        .comparison-note {
+            font-size: 13px;
+            color: #6B5D52;
+            padding: 12px;
+            background: #FAF8F5;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        .comparison-note strong {
+            color: #722F37;
+        }
+
+        /* Divider */
+        .section-divider {
+            height: 1px;
+            background: #E8E4DD;
+            margin: 20px 0;
+        }
+
+        .comments-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .comments-header.filtered {
+            color: #722F37;
+        }
+
+        .comment-preview {
+            padding: 12px;
+            background: #FAF8F5;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #6B5D52;
+        }
+
+        /* Wines section */
+        .wines-section {
+            margin-top: 20px;
+        }
+
+        .wines-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .wine-card-mini {
+            display: flex;
+            gap: 12px;
+            padding: 10px;
+            background: #FAF8F5;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .wine-card-mini:hover {
+            background: #F5F1EB;
+        }
+
+        .wine-image-mini {
+            width: 50px;
+            height: 70px;
+            background: linear-gradient(135deg, #722F37 0%, #4A1F24 100%);
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .wine-info-mini {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .wine-name-mini {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1A1A2E;
+            margin-bottom: 2px;
+        }
+
+        .wine-winery-mini {
+            font-size: 12px;
+            color: #6B5D52;
+            margin-bottom: 4px;
+        }
+
+        .wine-meta-mini {
+            font-size: 11px;
+            color: #8B7B6B;
+        }
+
+        .see-more-wines-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 1px solid #E8E4DD;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #722F37;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+
+        .see-more-wines-btn:hover {
+            background: #F5E6D6;
+            border-color: #722F37;
+        }
+
+        .highlight {
+            background: #F5E6D6;
+            color: #722F37;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏷️ Tag Header - Horizontal Scroll</h1>
+        <p class="subtitle">Subtags con scroll horizontal + animación hint</p>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             DEFAULT VIEW: Horizontal scroll with fade edges
+             Same implementation as wine detail sheets
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="mockup-section">
+            <div class="section-title">Vista por defecto: Scroll horizontal con fade</div>
+
+            <div class="wine-header">
+                <div class="wine-name">Ramón Bilbao Crianza</div>
+                <div class="wine-subtitle">Reseñas que mencionan frutas negras</div>
+            </div>
+
+            <div class="tag-display">
+                <div class="tag-name">Frutas Negras</div>
+                <div class="tag-description">
+                    Notas derivadas de antocianinas presentes en uvas tintas. Aportan estructura,
+                    color y notas a frutas del bosque que evolucionan con la crianza.
+                </div>
+                <div class="subtags-label">Notas relacionadas</div>
+
+                <div class="subtags-container">
+                    <div class="subtags-scroll">
+                        <div class="subtag-chip" onclick="filterBySubtag('Casis', 12)"><span class="subtag-count">12</span>Casis</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Mora', 8)"><span class="subtag-count">8</span>Mora</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Arándano', 5)"><span class="subtag-count">5</span>Arándano</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Ciruela', 4)"><span class="subtag-count">4</span>Ciruela</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Grosella negra', 3)"><span class="subtag-count">3</span>Grosella negra</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Higo', 2)"><span class="subtag-count">2</span>Higo</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Mora ártica', 1)"><span class="subtag-count">1</span>Mora ártica</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Berenjena', 1)"><span class="subtag-count">1</span>Berenjena</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Cereza', 1)"><span class="subtag-count">1</span>Cereza</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Guinda', 1)"><span class="subtag-count">1</span>Guinda</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Mora silvestre', 1)"><span class="subtag-count">1</span>Mora silvestre</div>
+                        <div class="subtag-chip" onclick="filterBySubtag('Arándano rojo', 1)"><span class="subtag-count">1</span>Arándano rojo</div>
+                    </div>
+                </div>
+
+                <!-- Filter header (shown when subtag is clicked) -->
+                <div class="filter-header" id="filter-header">
+                    <span class="filter-header-text"><strong>12</strong> COMENTARIOS mencionan <strong id="filter-subtag-name">Casis</strong></span>
+                    <button class="filter-clear-btn" onclick="clearFilterSim()">✕ Limpiar</button>
+                </div>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Vista por defecto:</strong><br>
+                Scroll horizontal con fade dinámico en ambos bordes (misma lógica que tags en ficha de vino).
+                <br><br>
+                <strong>Interacción:</strong><br>
+                Click en subtag → filtra comentarios + muestra header "N COMENTARIOS mencionan [SUBTAG]".
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             FULL SCREEN SIMULATION
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="mockup-section">
+            <div class="section-title">Simulación completa</div>
+
+            <div style="border-top: 1px solid #E8E4DD; padding-top: 12px;">
+                <div class="wine-header">
+                    <div class="wine-name">Ramón Bilbao Crianza</div>
+                    <div class="wine-subtitle">Reseñas que mencionan frutas negras</div>
+                </div>
+
+                <div class="tag-display">
+                    <div class="tag-name">Frutas Negras</div>
+                    <div class="tag-description">
+                        Notas derivadas de antocianinas presentes en uvas tintas. Aportan estructura,
+                        color y notas a frutas del bosque que evolucionan con la crianza.
+                    </div>
+                    <div class="subtags-label">Notas relacionadas</div>
+
+                    <div class="subtags-container">
+                        <div class="subtags-scroll">
+                            <div class="subtag-chip" onclick="filterBySubtag('Casis', 12)"><span class="subtag-count">12</span>Casis</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Mora', 8)"><span class="subtag-count">8</span>Mora</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Arándano', 5)"><span class="subtag-count">5</span>Arándano</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Ciruela', 4)"><span class="subtag-count">4</span>Ciruela</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Grosella negra', 3)"><span class="subtag-count">3</span>Grosella negra</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Higo', 2)"><span class="subtag-count">2</span>Higo</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Mora ártica', 1)"><span class="subtag-count">1</span>Mora ártica</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Berenjena', 1)"><span class="subtag-count">1</span>Berenjena</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Cereza', 1)"><span class="subtag-count">1</span>Cereza</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Guinda', 1)"><span class="subtag-count">1</span>Guinda</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Mora silvestre', 1)"><span class="subtag-count">1</span>Mora silvestre</div>
+                            <div class="subtag-chip" onclick="filterBySubtag('Arándano rojo', 1)"><span class="subtag-count">1</span>Arándano rojo</div>
+                        </div>
+                    </div>
+
+                    <!-- Filter header (shown when subtag is clicked) -->
+                    <div class="filter-header" id="filter-header-sim">
+                        <span class="filter-header-text"><strong>12</strong> COMENTARIOS mencionan <strong id="filter-subtag-name-sim">Casis</strong></span>
+                        <button class="filter-clear-btn" onclick="clearFilterSim()">✕ Limpiar</button>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="comments-header">4 comentarios</div>
+
+                <div class="comment-preview">
+                    <strong>María García</strong> · Sommelier · hace 2 semanas<br><br>
+                    Excelente wine con notas marcadas de <span class="highlight">frutas negras</span>.
+                    El <span class="highlight">casis</span> domina la nariz...
+                </div>
+
+                <div class="comment-preview">
+                    <strong>Carlos Ruiz</strong> · hace 1 semana<br><br>
+                    Totalmente de acuerdo. El <span class="highlight">casis</span> es lo primero que percibí.
+                    ¿Notaste también algo de pimienta?
+                </div>
+
+                <div class="wines-section">
+                    <div class="wines-header">Vinos con estas notas</div>
+
+                    <div class="wine-card-mini">
+                        <div class="wine-image-mini"></div>
+                        <div class="wine-info-mini">
+                            <div class="wine-name-mini">Ramón Bilbao Crianza</div>
+                            <div class="wine-winery-mini">Bodegas Ramón Bilbao</div>
+                            <div class="wine-meta-mini">Rioja · 2019 · €12.90</div>
+                        </div>
+                    </div>
+
+                    <div class="wine-card-mini">
+                        <div class="wine-image-mini" style="background: linear-gradient(135deg, #8B3A44 0%, #5A252C 100%);"></div>
+                        <div class="wine-info-mini">
+                            <div class="wine-name-mini">Marqués de Cáceres</div>
+                            <div class="wine-winery-mini">Marqués de Cáceres</div>
+                            <div class="wine-meta-mini">Rioja · 2020 · €10.50</div>
+                        </div>
+                    </div>
+
+                    <div class="wine-card-mini">
+                        <div class="wine-image-mini" style="background: linear-gradient(135deg, #A64B55 0%, #6B3039 100%);"></div>
+                        <div class="wine-info-mini">
+                            <div class="wine-name-mini">Pingus 2019</div>
+                            <div class="wine-winery-mini">Dominio de Pingus</div>
+                            <div class="wine-meta-mini">Ribera del Duero · 2019 · €295.00</div>
+                        </div>
+                    </div>
+
+                    <div class="wine-card-mini">
+                        <div class="wine-image-mini" style="background: linear-gradient(135deg, #9B4B5E 0%, #6B3040 100%);"></div>
+                        <div class="wine-info-mini">
+                            <div class="wine-name-mini">Muga Crianza</div>
+                            <div class="wine-winery-mini">Bodegas Muga</div>
+                            <div class="wine-meta-mini">Rioja · 2019 · €14.50</div>
+                        </div>
+                    </div>
+
+                    <div class="wine-card-mini">
+                        <div class="wine-image-mini" style="background: linear-gradient(135deg, #6B3A4B 0%, #4A2535 100%);"></div>
+                        <div class="wine-info-mini">
+                            <div class="wine-name-mini">Cune Crianza</div>
+                            <div class="wine-winery-mini">CVNE</div>
+                            <div class="wine-meta-mini">Rioja · 2019 · €11.90</div>
+                        </div>
+                    </div>
+
+                    <button class="see-more-wines-btn">Ver 23 vinos más con estas notas →</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ═════════════════════════════════════════════════════════════════
+        //     SCROLL FADE EFFECT (same logic as prototype.html)
+        // ═════════════════════════════════════════════════════════════════
+
+        function updateScrollFade(container) {
+            const scrollEl = container.querySelector('.subtags-scroll');
+            if (!scrollEl) return;
+
+            container.classList.toggle('scrolled-start', scrollEl.scrollLeft > 10);
+            container.classList.toggle('scrolled-end',
+                scrollEl.scrollLeft + scrollEl.clientWidth < scrollEl.scrollWidth - 10
+            );
+        }
+
+        // ═════════════════════════════════════════════════════════════════
+        //     SUBTAG FILTER FUNCTIONALITY
+        // ═════════════════════════════════════════════════════════════════
+
+        function filterBySubtag(subtagName, count) {
+            // Show filter header in both sections
+            document.querySelectorAll('.filter-header').forEach(header => {
+                header.classList.add('active');
+                header.querySelector('.filter-header-text').innerHTML =
+                    `<strong>${count}</strong> COMENTARIOS mencionan <strong>${subtagName}</strong>`;
+            });
+
+            // Update ALL comments headers to show filtered count
+            document.querySelectorAll('.comments-header').forEach(header => {
+                header.textContent = `${count} comentarios`;
+                header.classList.add('filtered');
+            });
+
+            // Set active state on clicked chip
+            document.querySelectorAll('.subtag-chip').forEach(chip => {
+                chip.classList.remove('active');
+                if (chip.textContent.includes(subtagName)) {
+                    chip.classList.add('active');
+                }
+            });
+
+            // Scroll to comments section (first one)
+            const commentsSection = document.querySelector('.comments-header');
+            if (commentsSection) {
+                commentsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function clearFilterSim() {
+            // Hide all filter headers
+            document.querySelectorAll('.filter-header').forEach(header => {
+                header.classList.remove('active');
+            });
+
+            // Reset ALL comments headers to default
+            document.querySelectorAll('.comments-header').forEach(header => {
+                header.textContent = '4 comentarios';
+                header.classList.remove('filtered');
+            });
+
+            // Remove active state from all chips
+            document.querySelectorAll('.subtag-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.subtags-container').forEach(container => {
+                const scrollEl = container.querySelector('.subtags-scroll');
+                if (scrollEl) {
+                    scrollEl.addEventListener('scroll', () => updateScrollFade(container));
+                    // Initial state
+                    updateScrollFade(container);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

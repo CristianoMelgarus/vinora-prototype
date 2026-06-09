@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Thread - Threaded vs Flat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #F5F1EB;
+            color: #1A1A2E;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #8B7B6B;
+            margin-bottom: 32px;
+        }
+
+        .mockup-section {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6B5D52;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E8E4DD;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0 16px;
+            border-bottom: 1px solid #E8E4DD;
+            margin-bottom: 16px;
+        }
+
+        .back-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FAF8F5;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Comment Card */
+        .comment-card {
+            margin-bottom: 16px;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #722F37;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .avatar.pro {
+            background: #1A1A2E;
+        }
+
+        .avatar.small {
+            width: 28px;
+            height: 28px;
+            font-size: 11px;
+        }
+
+        .commenter-info {
+            flex: 1;
+        }
+
+        .commenter-name {
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pro-badge {
+            font-size: 8px;
+            font-weight: 700;
+            color: #722F37;
+            letter-spacing: 0.5px;
+            background: #FAF8F5;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .comment-date {
+            font-size: 12px;
+            color: #8B7B6B;
+        }
+
+        .comment-rating {
+            color: #B8860B;
+            font-size: 12px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .comment-action {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #8B7B6B;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .comment-action:hover {
+            background: #FAF8F5;
+        }
+
+        .comment-action svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .comment-action.toasted {
+            color: #722F37;
+        }
+
+        .comment-action .count {
+            font-weight: 500;
+        }
+
+        .tag-highlight {
+            background: #F5E6D6;
+            color: #722F37;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           THREADED STYLE
+           ═══════════════════════════════════════════════════════════ */
+
+        .threaded .reply {
+            margin-left: 46px;
+            margin-top: 12px;
+            padding-left: 16px;
+            border-left: 2px solid #E8E4DD;
+        }
+
+        .threaded .reply .reply {
+            margin-left: 0;
+            padding-left: 12px;
+        }
+
+        .thread-line {
+            position: relative;
+        }
+
+        .thread-line::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 40px;
+            bottom: -20px;
+            width: 2px;
+            background: #E8E4DD;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           FLAT STYLE
+           ═══════════════════════════════════════════════════════════ */
+
+        .flat .reply {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #E8E4DD;
+        }
+
+        .flat .reply-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: #8B7B6B;
+            margin-bottom: 8px;
+        }
+
+        /* Reply Input */
+        .reply-input-box {
+            margin-top: 16px;
+            padding: 12px;
+            background: #FAF8F5;
+            border-radius: 8px;
+        }
+
+        .reply-input-box textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border: 1px solid #E8E4DD;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: none;
+            background: white;
+        }
+
+        .reply-input-box textarea:focus {
+            outline: none;
+            border-color: #722F37;
+        }
+
+        .reply-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #722F37;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #E8E4DD;
+            color: #6B5D52;
+        }
+
+        .comparison-note {
+            font-size: 13px;
+            color: #6B5D52;
+            padding: 12px;
+            background: #FAF8F5;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        .comparison-note strong {
+            color: #722F37;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💬 Comment Thread: Threaded vs Flat</h1>
+        <p class="subtitle">Visual comparison to help decide the reply structure</p>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             OPTION A: THREADED (nested)
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="mockup-section">
+            <div class="section-title">Opción A: Anidada (Threaded)</div>
+
+            <div class="top-bar">
+                <div class="back-btn">←</div>
+                <span style="color: #8B7B6B;">← Volver a comentarios</span>
+            </div>
+
+            <div class="comment-card threaded">
+                <!-- Main Comment -->
+                <div class="comment-header">
+                    <div class="avatar pro">M</div>
+                    <div class="commenter-info">
+                        <div class="commenter-name">
+                            María García
+                            <span class="pro-badge">PRO</span>
+                        </div>
+                        <div class="comment-date">Sommelier · hace 2 semanas</div>
+                    </div>
+                    <div class="comment-rating">★★★★★</div>
+                </div>
+                <p style="font-size: 14px; margin-bottom: 10px;">
+                    Excelente wine con notas marcadas de <span class="tag-highlight">frutas negras</span>.
+                    El <span class="tag-highlight">casis</span> domina la nariz, con un toque de <span class="tag-highlight">mora</span>
+                    en el paladar. Final largo con regustos de <span class="tag-highlight">ciruela</span>.
+                </p>
+                <div class="comment-actions">
+                    <div class="comment-action toasted">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        <span class="count">24</span>
+                    </div>
+                    <div class="comment-action">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Responder
+                    </div>
+                    <div class="comment-action">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Compartir
+                    </div>
+                    <div class="comment-action">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Reportar
+                    </div>
+                </div>
+
+                <!-- Reply 1 -->
+                <div class="reply">
+                    <div class="comment-header">
+                        <div class="avatar" style="background: #4A7C59;">C</div>
+                        <div class="commenter-info">
+                            <div class="commenter-name">Carlos Ruiz</div>
+                            <div class="comment-date">hace 1 semana</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; margin-bottom: 10px;">
+                        Totalmente de acuerdo. El <span class="tag-highlight">casis</span> es lo primero que percibí.
+                        ¿Notaste también algo de <span class="tag-highlight">pimienta negra</span> en el final?
+                    </p>
+                    <div class="comment-actions">
+                        <div class="comment-action toasted">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">8</span>
+                        </div>
+                        <div class="comment-action">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            Responder
+                        </div>
+                    </div>
+
+                    <!-- Nested Reply -->
+                    <div class="reply">
+                        <div class="comment-header">
+                            <div class="avatar pro">M</div>
+                            <div class="commenter-info">
+                                <div class="commenter-name">
+                                    María García
+                                    <span class="pro-badge">PRO</span>
+                                </div>
+                                <div class="comment-date">hace 6 días</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 14px; margin-bottom: 10px;">
+                            Sí, hay un toque sutil de pimienta. Más bien <span class="tag-highlight">pimienta rosa</span> que negra.
+                        </p>
+                        <div class="comment-actions">
+                            <div class="comment-action">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                Responder
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reply 2 -->
+                <div class="reply">
+                    <div class="comment-header">
+                        <div class="avatar" style="background: #8B7355;">A</div>
+                        <div class="commenter-info">
+                            <div class="commenter-name">Ana López</div>
+                            <div class="comment-date">hace 3 días</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; margin-bottom: 10px;">
+                        ¿Maridaste con algún queso? Creo que los <span class="tag-highlight">frutos negros</span>
+                        combinarían bien con un queso curado intenso.
+                    </p>
+                    <div class="comment-actions">
+                        <div class="comment-action">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            Responder
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Características:</strong><br>
+                • Conexiones visuales clarjas entre comentario y respuesta<br>
+                • Jerarquía obvia - sabe quién responde a quién<br>
+                • Puede volverse profundo con muchos niveles anidados<br>
+                • Requiere más espacio vertical
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             OPTION B: FLAT (chronological)
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="mockup-section">
+            <div class="section-title">Opción B: Plana (Flat Chronological)</div>
+
+            <div class="top-bar">
+                <div class="back-btn">←</div>
+                <span style="color: #8B7B6B;">← Volver a comentarios</span>
+            </div>
+
+            <div class="comment-card flat">
+                <!-- Main Comment -->
+                <div class="comment-header">
+                    <div class="avatar pro">M</div>
+                    <div class="commenter-info">
+                        <div class="commenter-name">
+                            María García
+                            <span class="pro-badge">PRO</span>
+                        </div>
+                        <div class="comment-date">Sommelier · hace 2 semanas</div>
+                    </div>
+                    <div class="comment-rating">★★★★★</div>
+                </div>
+                <p style="font-size: 14px; margin-bottom: 10px;">
+                    Excelente wine con notas marcadas de <span class="tag-highlight">frutas negras</span>.
+                    El <span class="tag-highlight">casis</span> domina la nariz, con un toque de <span class="tag-highlight">mora</span>
+                    en el paladar. Final largo con regustos de <span class="tag-highlight">ciruela</span>.
+                </p>
+                <div class="comment-actions">
+                    <div class="comment-action toasted">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        <span class="count">24</span>
+                    </div>
+                    <div class="comment-action">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Responder
+                    </div>
+                    <div class="comment-action">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Compartir
+                    </div>
+                    <div class="comment-action">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Reportar
+                    </div>
+                </div>
+
+                <!-- Reply 1 -->
+                <div class="reply">
+                    <div class="reply-indicator">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <span>En respuesta a María García</span>
+                    </div>
+                    <div class="comment-header">
+                        <div class="avatar" style="background: #4A7C59;">C</div>
+                        <div class="commenter-info">
+                            <div class="commenter-name">Carlos Ruiz</div>
+                            <div class="comment-date">hace 1 semana</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; margin-bottom: 10px;">
+                        Totalmente de acuerdo. El <span class="tag-highlight">casis</span> es lo primero que percibí.
+                        ¿Notaste también algo de <span class="tag-highlight">pimienta negra</span> en el final?
+                    </p>
+                    <div class="comment-actions">
+                        <div class="comment-action toasted">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="count">8</span>
+                        </div>
+                        <div class="comment-action">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            Responder
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reply 2 (nested reply to reply, but shown flat) -->
+                <div class="reply">
+                    <div class="reply-indicator">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <span>En respuesta a Carlos Ruiz</span>
+                    </div>
+                    <div class="comment-header">
+                        <div class="avatar pro">M</div>
+                        <div class="commenter-info">
+                            <div class="commenter-name">
+                                María García
+                                <span class="pro-badge">PRO</span>
+                            </div>
+                            <div class="comment-date">hace 6 días</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; margin-bottom: 10px;">
+                        Sí, hay un toque sutil de pimienta. Más bien <span class="tag-highlight">pimienta rosa</span> que negra.
+                    </p>
+                    <div class="comment-actions">
+                        <div class="comment-action">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            Responder
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reply 3 -->
+                <div class="reply">
+                    <div class="reply-indicator">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <span>En respuesta a María García</span>
+                    </div>
+                    <div class="comment-header">
+                        <div class="avatar" style="background: #8B7355;">A</div>
+                        <div class="commenter-info">
+                            <div class="commenter-name">Ana López</div>
+                            <div class="comment-date">hace 3 días</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; margin-bottom: 10px;">
+                        ¿Maridaste con algún queso? Creo que los <span class="tag-highlight">frutos negros</span>
+                        combinarían bien con un queso curado intenso.
+                    </p>
+                    <div class="comment-actions">
+                        <div class="comment-action">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            Responder
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Características:</strong><br>
+                • Todo en línea recta cronológica - fácil scroll<br>
+                • "En respuesta a X" indica contexto de forma plana<br>
+                • Más predecible, no se "pierde" en hilos profundos<br>
+                • Ocupa menos vertical, más horizontal por las etiquetas
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             REPLY INPUT
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="mockup-section">
+            <div class="section-title">Reply Input (same for both)</div>
+
+            <div class="reply-input-box">
+                <textarea placeholder="Escribe tu respuesta..."></textarea>
+                <div class="reply-actions">
+                    <button class="btn btn-secondary">Cancelar</button>
+                    <button class="btn btn-primary">Enviar respuesta</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

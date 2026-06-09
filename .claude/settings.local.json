@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(curl:*)",
+      "Bash(grep -A5 \"return \\\\`\" /home/cristianmelgarejo/Documentos/Vinora/prototype.html)"
+    ]
+  }
+}

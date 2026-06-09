@@ -1,0 +1,10 @@
+# Sensitive files - don't deploy these
+.claude/
+docs/
+*.pdf
+CONTEXT.md
+CLAUDE.md
+deploy.sh
+.surgeignore
+.git/
+.gitignore
